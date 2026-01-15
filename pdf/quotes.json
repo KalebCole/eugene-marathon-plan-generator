@@ -1,0 +1,75 @@
+{
+  "weekly_quotes": {
+    "1": {
+      "quote": "Every marathon starts with a single step",
+      "author": null
+    },
+    "2": {
+      "quote": "The body achieves what the mind believes",
+      "author": null
+    },
+    "3": {
+      "quote": "Consistency is the key to transformation",
+      "author": null
+    },
+    "4": {
+      "quote": "Rest is training too",
+      "author": null,
+      "note": "Recovery week"
+    },
+    "5": {
+      "quote": "Build your strength, build your confidence",
+      "author": null
+    },
+    "6": {
+      "quote": "Embrace the challenge, enjoy the journey",
+      "author": null
+    },
+    "7": {
+      "quote": "Recovery is where the magic happens",
+      "author": null,
+      "note": "Recovery week"
+    },
+    "8": {
+      "quote": "You're halfway there. Keep pushing.",
+      "author": null
+    },
+    "9": {
+      "quote": "Strong legs, strong heart, strong mind",
+      "author": null
+    },
+    "10": {
+      "quote": "Let your body absorb the work",
+      "author": null,
+      "note": "Recovery week"
+    },
+    "11": {
+      "quote": "You're stronger than you think",
+      "author": null,
+      "note": "Peak week"
+    },
+    "12": {
+      "quote": "This is what you trained for",
+      "author": null
+    },
+    "13": {
+      "quote": "Trust the process, embrace the peak",
+      "author": null
+    },
+    "14": {
+      "quote": "Taper time: Stay calm, stay sharp",
+      "author": null,
+      "note": "Taper begins"
+    },
+    "15": {
+      "quote": "Trust your training. Run your race.",
+      "author": null,
+      "note": "Race week"
+    }
+  },
+  "race_day": {
+    "pre_race": "You've done the work. Now go shine.",
+    "start_line": "Reign or shine, you've got this.",
+    "finish_line": "26.2 reasons to be proud"
+  }
+}

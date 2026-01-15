@@ -1,0 +1,517 @@
+{
+  "metadata": {
+    "planName": "Eugene Marathon - Moderate Plan",
+    "planLevel": "moderate",
+    "raceDate": "2026-04-26",
+    "raceName": "Eugene Full Marathon",
+    "totalWeeks": 15,
+    "weeklyHoursTarget": {
+      "min": 6,
+      "max": 8
+    },
+    "predictedFinishTime": {
+      "min": "3:55:00",
+      "max": "4:10:00",
+      "target": "4:00:00"
+    },
+    "generatedAt": "2026-01-15T12:00:00Z"
+  },
+  "athlete": {
+    "recentRace": {
+      "distance": "half marathon",
+      "time": "1:52:30",
+      "date": "2025-10-15"
+    },
+    "availableDays": {
+      "monday": { "available": true, "timeSlot": "morning", "maxDuration": 60 },
+      "tuesday": { "available": true, "timeSlot": "evening", "maxDuration": 75 },
+      "wednesday": { "available": true, "timeSlot": "morning", "maxDuration": 60 },
+      "thursday": { "available": false },
+      "friday": { "available": true, "timeSlot": "morning", "maxDuration": 45 },
+      "saturday": { "available": true, "timeSlot": "flexible", "maxDuration": 120 },
+      "sunday": { "available": true, "timeSlot": "morning", "maxDuration": 180 }
+    },
+    "weeklyHoursLimit": 7,
+    "blockedDates": [
+      { "start": "2026-02-15", "end": "2026-02-22", "reason": "Travel" },
+      { "start": "2026-03-08", "end": "2026-03-08", "reason": "Wedding" }
+    ],
+    "goal": "target_time"
+  },
+  "paceZones": {
+    "easy": {
+      "min": "10:30",
+      "max": "11:30",
+      "description": "Conversational pace, should feel comfortable. MP + 1:30-2:30."
+    },
+    "marathon": {
+      "min": "9:00",
+      "max": "9:15",
+      "description": "Goal race pace (~4:00 marathon)"
+    },
+    "tempo": {
+      "min": "8:20",
+      "max": "8:35",
+      "description": "Comfortably hard, can speak in short sentences"
+    },
+    "fiveK": {
+      "min": "7:45",
+      "max": "8:00",
+      "description": "Hard effort, limited speaking"
+    },
+    "interval": {
+      "min": "7:30",
+      "max": "7:45",
+      "description": "Near max effort for short bursts"
+    },
+    "recovery": {
+      "min": "11:30",
+      "max": "12:30",
+      "description": "Very easy, active recovery"
+    }
+  },
+  "hrZones": {
+    "zone1": {
+      "name": "Recovery",
+      "minHR": 93,
+      "maxHR": 111,
+      "percentMaxHR": "50-60%",
+      "purpose": "Active recovery, blood flow promotion"
+    },
+    "zone2": {
+      "name": "Aerobic/Easy",
+      "minHR": 111,
+      "maxHR": 130,
+      "percentMaxHR": "60-70%",
+      "purpose": "Build aerobic base - 80% of training should be here"
+    },
+    "zone3": {
+      "name": "Tempo",
+      "minHR": 130,
+      "maxHR": 148,
+      "percentMaxHR": "70-80%",
+      "purpose": "Improve lactate clearance, marathon pace"
+    },
+    "zone4": {
+      "name": "Threshold",
+      "minHR": 148,
+      "maxHR": 167,
+      "percentMaxHR": "80-90%",
+      "purpose": "Raise lactate threshold, race fitness"
+    },
+    "zone5": {
+      "name": "VO2max",
+      "minHR": 167,
+      "maxHR": 185,
+      "percentMaxHR": "90-100%",
+      "purpose": "Maximum aerobic capacity - short intervals only"
+    }
+  },
+  "nutritionTargets": {
+    "bmr": 1750,
+    "baseTDEE": 2400,
+    "macros": {
+      "protein": { "grams": 150, "percentage": 25 },
+      "carbs": { "grams": 300, "percentage": 50 },
+      "fat": { "grams": 67, "percentage": 25 }
+    },
+    "notes": "Base TDEE calculated for lightly active (desk job). Add 80-100 cal/mile for easy runs, 100-120 cal/mile for long runs."
+  },
+  "weeks": [
+    {
+      "weekNumber": 1,
+      "weeksUntilRace": 15,
+      "isRecoveryWeek": false,
+      "phase": "base",
+      "focus": "Building aerobic foundation, establishing routine",
+      "totalMileage": 25,
+      "totalHours": 4.5,
+      "strengthDays": 3,
+      "days": {
+        "monday": {
+          "date": "2026-01-13",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "lower_body", "timing": "After run", "duration": 40 }
+        },
+        "tuesday": {
+          "date": "2026-01-14",
+          "running": { "type": "intervals", "title": "Strides", "description": "Easy run with 6x100m strides", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2 (Zone 4-5 strides)" }
+        },
+        "wednesday": {
+          "date": "2026-01-15",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "upper_body", "timing": "After run", "duration": 30 }
+        },
+        "thursday": { "date": "2026-01-16", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": {
+          "date": "2026-01-17",
+          "running": { "type": "easy", "title": "Short Easy Run", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "core", "timing": "After run", "duration": 20 }
+        },
+        "saturday": { "date": "2026-01-18", "running": { "type": "cross_training", "title": "Cross Training", "estimatedDuration": 40 } },
+        "sunday": { "date": "2026-01-19", "running": { "type": "long", "title": "Long Run", "totalDistance": 9, "estimatedDuration": 99, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 2,
+      "weeksUntilRace": 14,
+      "isRecoveryWeek": false,
+      "phase": "base",
+      "focus": "Continue building base, introduce tempo",
+      "totalMileage": 28,
+      "totalHours": 5,
+      "strengthDays": 3,
+      "days": {
+        "monday": {
+          "date": "2026-01-20",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "lower_body", "timing": "After run", "duration": 40 }
+        },
+        "tuesday": {
+          "date": "2026-01-21",
+          "running": { "type": "tempo", "title": "Tempo Run", "description": "1.5mi warmup, 3mi tempo, 1.5mi cooldown", "totalDistance": 6, "estimatedDuration": 58, "hrZone": "Zone 3-4" }
+        },
+        "wednesday": {
+          "date": "2026-01-22",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "upper_body", "timing": "After run", "duration": 30 }
+        },
+        "thursday": { "date": "2026-01-23", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": {
+          "date": "2026-01-24",
+          "running": { "type": "easy", "title": "Short Easy Run", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "core", "timing": "After run", "duration": 20 }
+        },
+        "saturday": { "date": "2026-01-25", "running": { "type": "cross_training", "title": "Cross Training", "estimatedDuration": 40 } },
+        "sunday": { "date": "2026-01-26", "running": { "type": "long", "title": "Long Run", "totalDistance": 10, "estimatedDuration": 110, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 3,
+      "weeksUntilRace": 13,
+      "isRecoveryWeek": false,
+      "phase": "base",
+      "focus": "Peak base week, longest base phase volume",
+      "totalMileage": 32,
+      "totalHours": 5.5,
+      "strengthDays": 3,
+      "days": {
+        "monday": {
+          "date": "2026-01-27",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "lower_body", "timing": "After run", "duration": 40 }
+        },
+        "tuesday": {
+          "date": "2026-01-28",
+          "running": { "type": "intervals", "title": "Fartlek", "description": "Easy run with 8x1min pickups at tempo pace, 1min easy between", "totalDistance": 6, "estimatedDuration": 62, "hrZone": "Zone 2-3" }
+        },
+        "wednesday": {
+          "date": "2026-01-29",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "upper_body", "timing": "After run", "duration": 30 }
+        },
+        "thursday": { "date": "2026-01-30", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": {
+          "date": "2026-01-31",
+          "running": { "type": "easy", "title": "Short Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "core", "timing": "After run", "duration": 20 }
+        },
+        "saturday": { "date": "2026-02-01", "running": { "type": "cross_training", "title": "Cross Training", "estimatedDuration": 40 } },
+        "sunday": { "date": "2026-02-02", "running": { "type": "long", "title": "Long Run", "totalDistance": 12, "estimatedDuration": 132, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 4,
+      "weeksUntilRace": 12,
+      "isRecoveryWeek": true,
+      "phase": "base",
+      "focus": "RECOVERY WEEK - Absorb base training, prepare for build phase",
+      "totalMileage": 24,
+      "totalHours": 4,
+      "strengthDays": 1,
+      "days": {
+        "monday": {
+          "date": "2026-02-03",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" }
+        },
+        "tuesday": {
+          "date": "2026-02-04",
+          "running": { "type": "tempo", "title": "Short Tempo", "description": "Reduced: 1mi warmup, 2mi tempo, 1mi cooldown", "totalDistance": 4, "estimatedDuration": 40, "hrZone": "Zone 3-4" }
+        },
+        "wednesday": {
+          "date": "2026-02-05",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "full_body", "timing": "Light session", "duration": 25, "notes": "Recovery week - lighter weight, fewer sets" }
+        },
+        "thursday": { "date": "2026-02-06", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-02-07", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-02-08", "running": { "type": "rest", "title": "Rest Day" } },
+        "sunday": { "date": "2026-02-09", "running": { "type": "long", "title": "Reduced Long Run", "totalDistance": 8, "estimatedDuration": 88, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 5,
+      "weeksUntilRace": 11,
+      "isRecoveryWeek": false,
+      "phase": "build",
+      "focus": "Start build phase, introduce hill repeats",
+      "totalMileage": 30,
+      "totalHours": 5.5,
+      "strengthDays": 2,
+      "days": {
+        "monday": {
+          "date": "2026-02-10",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "lower_body", "timing": "After run", "duration": 35, "notes": "Build phase - reduced volume from base" }
+        },
+        "tuesday": {
+          "date": "2026-02-11",
+          "running": { "type": "hill_repeats", "title": "Hill Repeats", "description": "1.5mi warmup, 6x60sec hill at hard effort, jog down recovery, 1.5mi cooldown", "totalDistance": 5, "estimatedDuration": 52, "hrZone": "Zone 4-5 on hills" }
+        },
+        "wednesday": {
+          "date": "2026-02-12",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "upper_body", "timing": "After run", "duration": 30 }
+        },
+        "thursday": { "date": "2026-02-13", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-02-14", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-02-15", "running": { "type": "rest", "title": "Rest Day", "notes": "TRAVEL STARTS - Take it easy" } },
+        "sunday": { "date": "2026-02-16", "running": { "type": "long", "title": "Long Run", "totalDistance": 13, "estimatedDuration": 143, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 6,
+      "weeksUntilRace": 10,
+      "isRecoveryWeek": false,
+      "phase": "build",
+      "focus": "TRAVEL WEEK - Maintain fitness with flexible schedule",
+      "totalMileage": 28,
+      "totalHours": 4.5,
+      "strengthDays": 1,
+      "days": {
+        "monday": { "date": "2026-02-17", "running": { "type": "easy", "title": "Travel Run", "description": "Find a route near your location", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "tuesday": { "date": "2026-02-18", "running": { "type": "tempo", "title": "Travel Tempo", "description": "Shorter tempo - 3mi total with 1.5mi @ tempo", "totalDistance": 3, "estimatedDuration": 30, "hrZone": "Zone 3" } },
+        "wednesday": {
+          "date": "2026-02-19",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "full_body", "timing": "Hotel gym or bodyweight", "duration": 25 }
+        },
+        "thursday": { "date": "2026-02-20", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-02-21", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-02-22", "running": { "type": "rest", "title": "Travel Home", "notes": "TRAVEL ENDS - Rest and recover from travel" } },
+        "sunday": { "date": "2026-02-23", "running": { "type": "long", "title": "Long Run", "totalDistance": 13, "estimatedDuration": 143, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 7,
+      "weeksUntilRace": 9,
+      "isRecoveryWeek": true,
+      "phase": "build",
+      "focus": "RECOVERY WEEK - Absorb build training after travel",
+      "totalMileage": 26,
+      "totalHours": 4,
+      "strengthDays": 1,
+      "days": {
+        "monday": { "date": "2026-02-24", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "tuesday": { "date": "2026-02-25", "running": { "type": "intervals", "title": "Strides", "description": "Easy run with 6x100m strides - keep legs fresh", "totalDistance": 4, "estimatedDuration": 45, "hrZone": "Zone 2" } },
+        "wednesday": {
+          "date": "2026-02-26",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "full_body", "timing": "Light", "duration": 25 }
+        },
+        "thursday": { "date": "2026-02-27", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-02-28", "running": { "type": "easy", "title": "Short Easy", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-03-01", "running": { "type": "rest", "title": "Rest Day" } },
+        "sunday": { "date": "2026-03-02", "running": { "type": "long", "title": "Reduced Long Run", "totalDistance": 10, "estimatedDuration": 110, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 8,
+      "weeksUntilRace": 8,
+      "isRecoveryWeek": false,
+      "phase": "build",
+      "focus": "Resume build - increase volume, wedding on Sunday",
+      "totalMileage": 35,
+      "totalHours": 6,
+      "strengthDays": 2,
+      "days": {
+        "monday": {
+          "date": "2026-03-03",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "lower_body", "timing": "After run", "duration": 35 }
+        },
+        "tuesday": { "date": "2026-03-04", "running": { "type": "tempo", "title": "Tempo Run", "description": "1.5mi warmup, 4mi tempo, 1.5mi cooldown", "totalDistance": 7, "estimatedDuration": 65, "hrZone": "Zone 3-4" } },
+        "wednesday": {
+          "date": "2026-03-05",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "upper_body", "timing": "After run", "duration": 30 }
+        },
+        "thursday": { "date": "2026-03-06", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-03-07", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-03-08", "running": { "type": "long", "title": "Long Run (moved)", "description": "Long run moved to Saturday due to wedding", "totalDistance": 14, "estimatedDuration": 154, "hrZone": "Zone 2" } },
+        "sunday": { "date": "2026-03-09", "running": { "type": "rest", "title": "WEDDING DAY", "notes": "Enjoy the celebration!" } }
+      }
+    },
+    {
+      "weekNumber": 9,
+      "weeksUntilRace": 7,
+      "isRecoveryWeek": false,
+      "phase": "build",
+      "focus": "Peak build week - highest build phase volume",
+      "totalMileage": 40,
+      "totalHours": 7,
+      "strengthDays": 2,
+      "days": {
+        "monday": {
+          "date": "2026-03-10",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "lower_body", "timing": "After run", "duration": 35 }
+        },
+        "tuesday": { "date": "2026-03-11", "running": { "type": "intervals", "title": "800m Repeats", "description": "2mi warmup, 6x800m @ 5K pace with 400m jog recovery, 1mi cooldown", "totalDistance": 7, "estimatedDuration": 65, "hrZone": "Zone 4-5 during intervals" } },
+        "wednesday": {
+          "date": "2026-03-12",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "upper_body", "timing": "After run", "duration": 30 }
+        },
+        "thursday": { "date": "2026-03-13", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-03-14", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-03-15", "running": { "type": "cross_training", "title": "Cross Training", "estimatedDuration": 40 } },
+        "sunday": { "date": "2026-03-16", "running": { "type": "progression", "title": "Progression Long Run", "description": "18mi total: 12mi easy, 4mi moderate, 2mi at marathon pace", "totalDistance": 18, "estimatedDuration": 190, "hrZone": "Zone 2→3→MP" } }
+      }
+    },
+    {
+      "weekNumber": 10,
+      "weeksUntilRace": 6,
+      "isRecoveryWeek": true,
+      "phase": "build",
+      "focus": "RECOVERY WEEK - Final recovery before peak phase",
+      "totalMileage": 30,
+      "totalHours": 5,
+      "strengthDays": 1,
+      "days": {
+        "monday": { "date": "2026-03-17", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "tuesday": { "date": "2026-03-18", "running": { "type": "tempo", "title": "Short Tempo", "description": "1mi warmup, 2mi tempo, 1mi cooldown", "totalDistance": 4, "estimatedDuration": 40, "hrZone": "Zone 3" } },
+        "wednesday": {
+          "date": "2026-03-19",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "full_body", "timing": "Light", "duration": 25 }
+        },
+        "thursday": { "date": "2026-03-20", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-03-21", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-03-22", "running": { "type": "rest", "title": "Rest Day" } },
+        "sunday": { "date": "2026-03-23", "running": { "type": "long", "title": "Reduced Long Run", "totalDistance": 12, "estimatedDuration": 132, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 11,
+      "weeksUntilRace": 5,
+      "isRecoveryWeek": false,
+      "phase": "peak",
+      "focus": "PEAK WEEK - Highest volume, longest long run",
+      "totalMileage": 44,
+      "totalHours": 7.5,
+      "strengthDays": 2,
+      "days": {
+        "monday": {
+          "date": "2026-03-24",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "lower_body", "timing": "Light - maintenance only", "duration": 25 }
+        },
+        "tuesday": { "date": "2026-03-25", "running": { "type": "tempo", "title": "Tempo Run", "description": "1.5mi warmup, 5mi tempo, 1.5mi cooldown", "totalDistance": 8, "estimatedDuration": 72, "hrZone": "Zone 3-4" } },
+        "wednesday": {
+          "date": "2026-03-26",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "core", "timing": "After run", "duration": 20 }
+        },
+        "thursday": { "date": "2026-03-27", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-03-28", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-03-29", "running": { "type": "cross_training", "title": "Cross Training or Rest", "estimatedDuration": 30 } },
+        "sunday": { "date": "2026-03-30", "running": { "type": "long", "title": "Peak Long Run", "description": "20 miles - your longest run. Stay easy, practice race fueling.", "totalDistance": 20, "estimatedDuration": 220, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 12,
+      "weeksUntilRace": 4,
+      "isRecoveryWeek": false,
+      "phase": "peak",
+      "focus": "Race simulation long run with marathon pace finish",
+      "totalMileage": 40,
+      "totalHours": 6.5,
+      "strengthDays": 1,
+      "days": {
+        "monday": { "date": "2026-03-31", "running": { "type": "easy", "title": "Recovery Run", "description": "Very easy after long weekend", "totalDistance": 4, "estimatedDuration": 48, "hrZone": "Zone 1-2" } },
+        "tuesday": { "date": "2026-04-01", "running": { "type": "intervals", "title": "Sharpening Intervals", "description": "2mi warmup, 4x1000m @ 5K pace, 2min jog recovery, 1mi cooldown", "totalDistance": 6, "estimatedDuration": 55, "hrZone": "Zone 4-5" } },
+        "wednesday": {
+          "date": "2026-04-02",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "full_body", "timing": "Light maintenance", "duration": 20 }
+        },
+        "thursday": { "date": "2026-04-03", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-04-04", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-04-05", "running": { "type": "rest", "title": "Rest - Save legs for tomorrow" } },
+        "sunday": { "date": "2026-04-06", "running": { "type": "race_pace", "title": "Race Simulation Long Run", "description": "16mi total: 10mi easy, then 6mi at marathon pace. Practice race fueling.", "totalDistance": 16, "estimatedDuration": 165, "hrZone": "Zone 2→MP" } }
+      }
+    },
+    {
+      "weekNumber": 13,
+      "weeksUntilRace": 3,
+      "isRecoveryWeek": false,
+      "phase": "peak",
+      "focus": "Final hard week before taper begins",
+      "totalMileage": 35,
+      "totalHours": 5.5,
+      "strengthDays": 1,
+      "days": {
+        "monday": { "date": "2026-04-07", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" } },
+        "tuesday": { "date": "2026-04-08", "running": { "type": "tempo", "title": "Final Tempo", "description": "1mi warmup, 4mi tempo, 1mi cooldown", "totalDistance": 6, "estimatedDuration": 56, "hrZone": "Zone 3-4" } },
+        "wednesday": {
+          "date": "2026-04-09",
+          "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" },
+          "strength": { "scheduled": true, "type": "core", "timing": "Light", "duration": 15, "notes": "Last strength session before taper" }
+        },
+        "thursday": { "date": "2026-04-10", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-04-11", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-04-12", "running": { "type": "rest", "title": "Rest Day" } },
+        "sunday": { "date": "2026-04-13", "running": { "type": "long", "title": "Final Long Run", "description": "Last long effort before taper - moderate pace", "totalDistance": 12, "estimatedDuration": 130, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 14,
+      "weeksUntilRace": 2,
+      "isRecoveryWeek": false,
+      "phase": "taper",
+      "focus": "TAPER BEGINS - Reduce volume, maintain sharpness",
+      "totalMileage": 25,
+      "totalHours": 4,
+      "strengthDays": 0,
+      "days": {
+        "monday": { "date": "2026-04-14", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "tuesday": { "date": "2026-04-15", "running": { "type": "intervals", "title": "Sharpening Strides", "description": "3mi easy with 6x100m strides", "totalDistance": 4, "estimatedDuration": 45, "hrZone": "Zone 2" } },
+        "wednesday": { "date": "2026-04-16", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
+        "thursday": { "date": "2026-04-17", "running": { "type": "rest", "title": "Rest Day" } },
+        "friday": { "date": "2026-04-18", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-04-19", "running": { "type": "rest", "title": "Rest Day" } },
+        "sunday": { "date": "2026-04-20", "running": { "type": "long", "title": "Taper Long Run", "description": "Last double-digit run. Keep it easy.", "totalDistance": 10, "estimatedDuration": 110, "hrZone": "Zone 2" } }
+      }
+    },
+    {
+      "weekNumber": 15,
+      "weeksUntilRace": 1,
+      "isRecoveryWeek": false,
+      "phase": "taper",
+      "focus": "RACE WEEK - Rest, hydrate, trust your training",
+      "totalMileage": 15,
+      "totalHours": 2.5,
+      "strengthDays": 0,
+      "days": {
+        "monday": { "date": "2026-04-21", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" } },
+        "tuesday": { "date": "2026-04-22", "running": { "type": "intervals", "title": "Final Shakeout", "description": "2mi easy with 4x100m strides at MP", "totalDistance": 3, "estimatedDuration": 35, "hrZone": "Zone 2" } },
+        "wednesday": { "date": "2026-04-23", "running": { "type": "easy", "title": "Easy Jog", "totalDistance": 2, "estimatedDuration": 22, "hrZone": "Zone 1-2" } },
+        "thursday": { "date": "2026-04-24", "running": { "type": "rest", "title": "Rest Day", "notes": "Carb load dinner. Stay hydrated. Lay out race gear." } },
+        "friday": { "date": "2026-04-25", "running": { "type": "easy", "title": "Pre-Race Shakeout", "description": "Easy 2mi with a few 20-second pickups", "totalDistance": 2, "estimatedDuration": 25, "hrZone": "Zone 2" } },
+        "saturday": { "date": "2026-04-26", "running": { "type": "race_pace", "title": "RACE DAY - Eugene Marathon", "description": "26.2 miles. Trust your training. Start conservative. Finish strong.", "totalDistance": 26.2, "estimatedDuration": 240, "hrZone": "Zone 3", "notes": "Target: 4:00:00. Pace: 9:00-9:15/mile. Fuel every 45min." } },
+        "sunday": { "date": "2026-04-27", "running": { "type": "rest", "title": "Recovery", "description": "Celebrate your accomplishment!" } }
+      }
+    }
+  ]
+}
