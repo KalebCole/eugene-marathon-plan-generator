@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "mcp__n8n-mcp__search_nodes",
+      "mcp__n8n-mcp__get_node",
+      "WebFetch(domain:docs.google.com)",
+      "mcp__n8n-mcp__validate_workflow",
+      "mcp__n8n-mcp__n8n_executions",
+      "mcp__n8n-mcp__n8n_update_partial_workflow",
+      "mcp__plugin_github_github__get_file_contents",
+      "Bash(dir \"C:\\\\Users\\\\kaleb\\\\.claude\\\\skills\\\\pdf\\\\scripts\")",
+      "WebFetch(domain:www.nike.com)",
+      "WebSearch",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(python:*)"
+    ]
+  },
+  "outputStyle": "default"
+}

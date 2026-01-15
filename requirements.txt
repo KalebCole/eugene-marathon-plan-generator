@@ -1,0 +1,4 @@
+# Reign or Shine - Marathon Training Plan Generator
+# PDF Generation Dependencies
+
+reportlab>=4.0.0
