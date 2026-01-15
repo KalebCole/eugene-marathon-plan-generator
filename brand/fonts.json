@@ -1,0 +1,46 @@
+{
+  "name": "Reign or Shine Typography",
+  "fonts": {
+    "brand": {
+      "family": "Pacifico",
+      "fallback": "cursive",
+      "source": "Google Fonts",
+      "url": "https://fonts.google.com/specimen/Pacifico",
+      "usage": "Logo, brand name, decorative headers",
+      "style": "Regular 400"
+    },
+    "headers": {
+      "family": "Montserrat",
+      "fallback": "sans-serif",
+      "source": "Google Fonts",
+      "url": "https://fonts.google.com/specimen/Montserrat",
+      "usage": "Section headers, week titles",
+      "weights": ["600", "700"]
+    },
+    "body": {
+      "family": "Open Sans",
+      "fallback": "sans-serif",
+      "source": "Google Fonts",
+      "url": "https://fonts.google.com/specimen/Open+Sans",
+      "usage": "Body text, workout details, data",
+      "weights": ["400", "600"]
+    }
+  },
+  "sizes": {
+    "brand_title": 48,
+    "page_title": 28,
+    "section_header": 20,
+    "subsection": 16,
+    "body": 14,
+    "small": 12,
+    "caption": 10
+  },
+  "effects": {
+    "glow": {
+      "description": "Neon glow effect for brand text",
+      "offset": [2, 2],
+      "blur_passes": 3,
+      "color": "neon_pink"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "name": "Google Form to GitHub - Athlete Intake",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "mode": "id",
+          "value": "1DljgAQiR48uiZXsXClXEdmoSr-WMCK7fpCBOAoVUUKc"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1195731411,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DljgAQiR48uiZXsXClXEdmoSr-WMCK7fpCBOAoVUUKc/edit#gid=1195731411"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "id": "af5e5b7e-228e-43a9-8bfb-e421161f2970",
+      "name": "New Form Submission",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "FgtydgIHvEE7WRCC",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Transform Google Form submission to athlete intake JSON\nconst input = $input.first().json;\n\n// Parse timestamp and create filename-safe version\nconst timestamp = new Date(input['Timestamp']).toISOString();\nconst fileTimestamp = timestamp.replace(/[:.]/g, '-');\n\n// Build the athlete intake object\nconst athleteIntake = {\n  submittedAt: timestamp,\n  \n  recentRace: {\n    raw: input['1. Recent Race Performance (What was your recent half marathon time or any recent race result? Please put time and date of race)'] || ''\n  },\n  \n  availableDays: {\n    weekday: input['2. Weekday Running Availability (e.g., Mon-Fri, mornings before 7 am)'] || '',\n    weekend: input['3. Weekend Running Availability (Availability for long runs) e.g. I can run on most Saturday mornings'] || ''\n  },\n  \n  weeklyHoursLimit: input['4. Total Weekly Commitment (Total hours per week you can dedicate to training (running + lifting combined))'] || '',\n  \n  heartRate: {\n    maxHR: input['5. Max Heart Rate (Check Garmin Connect > More > Garmin Devices > your Garmin device > User Profile > Heart Rate & Power Zones > Heart Rate)'] || '',\n    lthr: input['6. Lactate Threshold HR (Leave blank if unknown/not tested)'] || '',\n    restingHR: input['7. Resting Heart Rate (from Garmin)'] || ''\n  },\n  \n  strengthPreferences: {\n    daysPerWeek: input['8. Lifting Frequency (days/week)'] || '',\n    preferredTimes: input['9. Preferred Lifting Days/Times'] || '',\n    restrictions: input['10. Exercise Preferences & Restrictions (List any exercises you want to include or specific ones you need to avoid due to injury or preference)'] || ''\n  },\n  \n  bodyComposition: {\n    heightWeight: input['11. Basic Metrics (Height and Current Weight)'] || '',\n    age: input['12. Age'] || '',\n    sex: input['13. Gender (Required for BMR/Calorie calculations)'] || '',\n    activityLevel: input['14. Daily Activity Level (Non-Training)'] || ''\n  },\n  \n  dietaryRestrictions: input['15. Dietary Restrictions (Any allergies, preferences (Vegan, Keto, etc.), or specific goals)'] || '',\n  \n  blockedDates: input['16. Travel & Conflict Dates (List any upcoming travel, weddings, or events where you cannot train)'] || '',\n  \n  goal: input['17. Eugene Marathon Goal'] || '',\n  \n  targetTime: input[\"If 'Target a specific time' was selected above, please specify your target time.\"] || ''\n};\n\n// Create filename from timestamp\nconst filename = `intake/${fileTimestamp}-submission.json`;\n\nreturn {\n  json: {\n    athleteIntake,\n    filename,\n    fileContent: JSON.stringify(athleteIntake, null, 2),\n    commitMessage: `Add athlete intake: ${fileTimestamp}`\n  }\n};"
+      },
+      "id": "b4498718-76bb-4e71-8538-3ee66a4f4a5e",
+      "name": "Transform to Athlete JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [224, 0]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "mode": "name",
+          "value": "kalebcole"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "eugene-marathon-plan-generator",
+          "mode": "name"
+        },
+        "filePath": {
+          "__rl": true,
+          "value": "={{ $json.filename }}",
+          "mode": "expression"
+        },
+        "fileContent": "={{ $json.fileContent }}",
+        "commitMessage": "={{ $json.commitMessage }}"
+      },
+      "id": "6ced4de6-8634-48fe-8ffa-7f4df7fa15eb",
+      "name": "Commit to GitHub",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [448, 0],
+      "webhookId": "a23ff0a5-5189-4026-99b5-b5738d916337",
+      "credentials": {
+        "githubApi": {
+          "id": "5rfl0z39l0yHWgkW",
+          "name": "Eugene Marathon Plan PAT"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "New Form Submission": {
+      "main": [
+        [
+          {
+            "node": "Transform to Athlete JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform to Athlete JSON": {
+      "main": [
+        [
+          {
+            "node": "Commit to GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "ca248622-76a7-4c10-852f-e39e80015cf8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4038bc807ff8f467d32a6f6a7b326dc5dcf13409b6a0cf608446acd26c7f76b6"
+  },
+  "id": "PE4GnReyMuoookZ5",
+  "tags": []
+}

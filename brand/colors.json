@@ -1,0 +1,55 @@
+{
+  "name": "Reign or Shine",
+  "description": "Twilight aesthetic inspired by Seattle run club Reign or Shine",
+  "palette": {
+    "twilight_navy": {
+      "hex": "#1a1a3e",
+      "rgb": [26, 26, 62],
+      "usage": "Primary background"
+    },
+    "deep_purple": {
+      "hex": "#2d1b4e",
+      "rgb": [45, 27, 78],
+      "usage": "Secondary background, gradients"
+    },
+    "neon_pink": {
+      "hex": "#ff6bb3",
+      "rgb": [255, 107, 179],
+      "usage": "Accent, emphasis, workout types"
+    },
+    "cyan_glow": {
+      "hex": "#7dd3fc",
+      "rgb": [125, 211, 252],
+      "usage": "Secondary accent, HR zones, headers"
+    },
+    "soft_white": {
+      "hex": "#f0f0ff",
+      "rgb": [240, 240, 255],
+      "usage": "Body text, stars"
+    },
+    "strip_purple": {
+      "hex": "#3d2a5c",
+      "rgb": [61, 42, 92],
+      "opacity": 0.8,
+      "usage": "Schedule row backgrounds"
+    }
+  },
+  "phase_colors": {
+    "base": "#7dd3fc",
+    "build": "#ff6bb3",
+    "peak": "#f0f0ff",
+    "taper": "#a78bfa",
+    "race": "#fbbf24"
+  },
+  "workout_colors": {
+    "easy": "#7dd3fc",
+    "long": "#a78bfa",
+    "tempo": "#ff6bb3",
+    "intervals": "#f472b6",
+    "hill_repeats": "#fb923c",
+    "race_pace": "#fbbf24",
+    "rest": "#6b7280",
+    "cross_training": "#34d399",
+    "recovery": "#94a3b8"
+  }
+}

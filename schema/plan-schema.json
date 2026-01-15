@@ -1,0 +1,471 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Marathon Training Plan",
+  "description": "A comprehensive marathon training plan with running, strength, and nutrition",
+  "type": "object",
+  "required": ["metadata", "athlete", "paceZones", "hrZones", "nutritionTargets", "weeks"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["planName", "planLevel", "raceDate", "raceName", "totalWeeks", "generatedAt"],
+      "properties": {
+        "planName": {
+          "type": "string",
+          "description": "Human-readable plan name",
+          "examples": ["Eugene Marathon - Moderate Plan"]
+        },
+        "planLevel": {
+          "type": "string",
+          "enum": ["conservative", "moderate", "ambitious"],
+          "description": "Training intensity level"
+        },
+        "raceDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Race date in YYYY-MM-DD format"
+        },
+        "raceName": {
+          "type": "string",
+          "description": "Name of the race"
+        },
+        "totalWeeks": {
+          "type": "integer",
+          "description": "Total weeks in the plan"
+        },
+        "weeklyHoursTarget": {
+          "type": "object",
+          "properties": {
+            "running": { "type": "number" },
+            "strength": { "type": "number" },
+            "total": { "type": "number" }
+          }
+        },
+        "predictedFinishTime": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "string", "description": "Best case finish time (HH:MM:SS)" },
+            "max": { "type": "string", "description": "Conservative finish time (HH:MM:SS)" },
+            "target": { "type": "string", "description": "Target finish time (HH:MM:SS)" }
+          }
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "athlete": {
+      "type": "object",
+      "description": "Athlete profile used to generate this plan",
+      "properties": {
+        "recentRace": {
+          "type": "object",
+          "properties": {
+            "distance": { "type": "string", "examples": ["half marathon", "10K", "5K"] },
+            "time": { "type": "string", "description": "Finish time in HH:MM:SS or MM:SS format" },
+            "date": { "type": "string", "format": "date" }
+          }
+        },
+        "bodyComposition": {
+          "type": "object",
+          "description": "Body metrics for TDEE calculation",
+          "properties": {
+            "height": {
+              "type": "object",
+              "properties": {
+                "value": { "type": "number" },
+                "unit": { "type": "string", "enum": ["cm", "inches"] }
+              }
+            },
+            "weight": {
+              "type": "object",
+              "properties": {
+                "value": { "type": "number" },
+                "unit": { "type": "string", "enum": ["kg", "lbs"] }
+              }
+            },
+            "age": { "type": "integer" },
+            "sex": { "type": "string", "enum": ["male", "female"] },
+            "activityLevel": {
+              "type": "string",
+              "enum": ["sedentary", "lightly_active", "moderately_active", "very_active"],
+              "description": "Activity level outside of training"
+            }
+          }
+        },
+        "heartRate": {
+          "type": "object",
+          "description": "Heart rate data from Garmin or testing",
+          "properties": {
+            "maxHR": { "type": "integer", "description": "Maximum heart rate in bpm" },
+            "restingHR": { "type": "integer", "description": "Resting heart rate in bpm" },
+            "lthr": { "type": "integer", "description": "Lactate threshold heart rate in bpm (if known)" }
+          }
+        },
+        "availableDays": {
+          "type": "object",
+          "description": "Days and times available for training",
+          "properties": {
+            "monday": { "$ref": "#/definitions/dayAvailability" },
+            "tuesday": { "$ref": "#/definitions/dayAvailability" },
+            "wednesday": { "$ref": "#/definitions/dayAvailability" },
+            "thursday": { "$ref": "#/definitions/dayAvailability" },
+            "friday": { "$ref": "#/definitions/dayAvailability" },
+            "saturday": { "$ref": "#/definitions/dayAvailability" },
+            "sunday": { "$ref": "#/definitions/dayAvailability" }
+          }
+        },
+        "strengthPreferences": {
+          "type": "object",
+          "properties": {
+            "daysPerWeek": { "type": "integer" },
+            "preferredDays": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "avoidBeforeLongRun": { "type": "boolean", "default": true },
+            "notes": { "type": "string" }
+          }
+        },
+        "weeklyHoursLimit": { "type": "number" },
+        "blockedDates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": { "type": "string", "format": "date" },
+              "end": { "type": "string", "format": "date" },
+              "reason": { "type": "string" }
+            }
+          }
+        },
+        "dietaryRestrictions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "currentSupplements": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "goal": {
+          "type": "string",
+          "enum": ["finish", "target_time", "best_performance"]
+        }
+      }
+    },
+    "paceZones": {
+      "type": "object",
+      "description": "Calculated pace zones based on athlete's fitness",
+      "required": ["easy", "marathon", "tempo", "fiveK", "interval"],
+      "properties": {
+        "easy": { "$ref": "#/definitions/paceRange" },
+        "marathon": { "$ref": "#/definitions/paceRange" },
+        "tempo": { "$ref": "#/definitions/paceRange" },
+        "fiveK": { "$ref": "#/definitions/paceRange" },
+        "interval": { "$ref": "#/definitions/paceRange" },
+        "recovery": { "$ref": "#/definitions/paceRange" }
+      }
+    },
+    "hrZones": {
+      "type": "object",
+      "description": "Heart rate training zones",
+      "properties": {
+        "zone1": { "$ref": "#/definitions/hrZone" },
+        "zone2": { "$ref": "#/definitions/hrZone" },
+        "zone3": { "$ref": "#/definitions/hrZone" },
+        "zone4": { "$ref": "#/definitions/hrZone" },
+        "zone5": { "$ref": "#/definitions/hrZone" }
+      }
+    },
+    "nutritionTargets": {
+      "type": "object",
+      "description": "Base nutrition targets calculated from TDEE",
+      "properties": {
+        "bmr": { "type": "integer", "description": "Basal Metabolic Rate in calories" },
+        "baseTDEE": { "type": "integer", "description": "Base TDEE without training in calories" },
+        "macros": {
+          "type": "object",
+          "properties": {
+            "protein": {
+              "type": "object",
+              "properties": {
+                "grams": { "type": "integer" },
+                "percentage": { "type": "number" }
+              }
+            },
+            "carbs": {
+              "type": "object",
+              "properties": {
+                "grams": { "type": "integer" },
+                "percentage": { "type": "number" }
+              }
+            },
+            "fat": {
+              "type": "object",
+              "properties": {
+                "grams": { "type": "integer" },
+                "percentage": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "weeks": {
+      "type": "array",
+      "description": "Array of training weeks",
+      "items": { "$ref": "#/definitions/week" }
+    }
+  },
+  "definitions": {
+    "dayAvailability": {
+      "type": "object",
+      "properties": {
+        "available": { "type": "boolean" },
+        "timeSlot": {
+          "type": "string",
+          "enum": ["morning", "midday", "evening", "flexible"],
+          "description": "Preferred time slot"
+        },
+        "maxDuration": {
+          "type": "integer",
+          "description": "Maximum workout duration in minutes"
+        }
+      }
+    },
+    "paceRange": {
+      "type": "object",
+      "properties": {
+        "min": { "type": "string", "description": "Faster end of pace range (MM:SS per mile)" },
+        "max": { "type": "string", "description": "Slower end of pace range (MM:SS per mile)" },
+        "description": { "type": "string" }
+      }
+    },
+    "hrZone": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "minHR": { "type": "integer" },
+        "maxHR": { "type": "integer" },
+        "percentMaxHR": { "type": "string", "description": "e.g., '60-70%'" },
+        "purpose": { "type": "string" }
+      }
+    },
+    "week": {
+      "type": "object",
+      "required": ["weekNumber", "phase", "days"],
+      "properties": {
+        "weekNumber": { "type": "integer" },
+        "weeksUntilRace": {
+          "type": "integer",
+          "description": "Countdown to race day for easy reference"
+        },
+        "isRecoveryWeek": {
+          "type": "boolean",
+          "description": "True if this is a reduced-volume recovery week"
+        },
+        "phase": {
+          "type": "string",
+          "enum": ["base", "build", "peak", "taper", "race"],
+          "description": "Training phase"
+        },
+        "focus": {
+          "type": "string",
+          "description": "Main focus for this week",
+          "examples": ["Building aerobic base", "Long run progression", "Recovery week", "Race week"]
+        },
+        "totalMileage": { "type": "number", "description": "Total planned running miles for the week" },
+        "totalHours": { "type": "number", "description": "Total planned hours for the week (running + strength)" },
+        "strengthDays": { "type": "integer", "description": "Number of strength sessions this week" },
+        "days": {
+          "type": "object",
+          "properties": {
+            "monday": { "$ref": "#/definitions/day" },
+            "tuesday": { "$ref": "#/definitions/day" },
+            "wednesday": { "$ref": "#/definitions/day" },
+            "thursday": { "$ref": "#/definitions/day" },
+            "friday": { "$ref": "#/definitions/day" },
+            "saturday": { "$ref": "#/definitions/day" },
+            "sunday": { "$ref": "#/definitions/day" }
+          }
+        }
+      }
+    },
+    "day": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "dayOfWeek": { "type": "string" },
+        "running": { "$ref": "#/definitions/runningWorkout" },
+        "strength": { "$ref": "#/definitions/strengthSession" },
+        "nutrition": { "$ref": "#/definitions/dailyNutrition" },
+        "notes": { "type": "string" }
+      }
+    },
+    "runningWorkout": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["rest", "easy", "long", "tempo", "intervals", "fartlek", "race_pace", "recovery", "cross_training", "hill_repeats", "progression"],
+          "description": "Type of workout. 'hill_repeats' for hill efforts in build phase. 'progression' for runs that finish faster than they start."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short human-readable title",
+          "examples": ["Easy Run", "Long Run", "Tempo Intervals", "Rest Day"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed workout description"
+        },
+        "totalDistance": {
+          "type": "number",
+          "description": "Total distance in miles"
+        },
+        "estimatedDuration": {
+          "type": "integer",
+          "description": "Estimated duration in minutes"
+        },
+        "hrZone": {
+          "type": "string",
+          "description": "Target HR zone(s) for this workout"
+        },
+        "caloriesBurned": {
+          "type": "integer",
+          "description": "Estimated calories burned"
+        },
+        "structure": {
+          "$ref": "#/definitions/workoutStructure",
+          "description": "Detailed workout structure for complex workouts"
+        }
+      }
+    },
+    "strengthSession": {
+      "type": "object",
+      "properties": {
+        "scheduled": { "type": "boolean" },
+        "type": {
+          "type": "string",
+          "enum": ["full_body", "upper_body", "lower_body", "core", "mobility"],
+          "description": "Focus of the strength session"
+        },
+        "timing": {
+          "type": "string",
+          "description": "When to do the session relative to running"
+        },
+        "duration": {
+          "type": "integer",
+          "description": "Duration in minutes"
+        },
+        "caloriesBurned": {
+          "type": "integer",
+          "description": "Estimated calories burned"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional guidance"
+        }
+      }
+    },
+    "dailyNutrition": {
+      "type": "object",
+      "properties": {
+        "dailyTarget": {
+          "type": "object",
+          "properties": {
+            "calories": { "type": "integer", "description": "Total daily calorie target" },
+            "breakdown": { "type": "string", "description": "How calories are calculated" },
+            "protein": { "type": "string", "description": "Protein target with percentage" },
+            "carbs": { "type": "string", "description": "Carb target with percentage" },
+            "fat": { "type": "string", "description": "Fat target with percentage" }
+          }
+        },
+        "timing": {
+          "type": "object",
+          "properties": {
+            "preWorkout": { "type": "string" },
+            "duringWorkout": { "type": "string" },
+            "postWorkout": { "type": "string" }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "workoutStructure": {
+      "type": "object",
+      "properties": {
+        "warmup": {
+          "type": "object",
+          "properties": {
+            "distance": { "type": "number" },
+            "unit": { "type": "string", "enum": ["miles", "km", "meters"] },
+            "pace": { "type": "string" },
+            "hrZone": { "type": "string" },
+            "duration": { "type": "integer", "description": "Duration in minutes if distance not specified" }
+          }
+        },
+        "main": {
+          "type": "object",
+          "description": "Main workout segment",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["continuous", "intervals", "ladder", "pyramid"]
+            },
+            "distance": { "type": "number", "description": "For continuous workouts" },
+            "pace": { "type": "string", "description": "For continuous workouts" },
+            "hrZone": { "type": "string" },
+            "repeats": { "type": "integer", "description": "Number of intervals" },
+            "work": {
+              "type": "object",
+              "description": "Work interval details",
+              "properties": {
+                "distance": { "type": "number" },
+                "unit": { "type": "string", "enum": ["miles", "km", "meters"] },
+                "duration": { "type": "integer", "description": "Duration in seconds if distance not specified" },
+                "pace": { "type": "string" },
+                "hrZone": { "type": "string" }
+              }
+            },
+            "recovery": {
+              "type": "object",
+              "description": "Recovery interval details",
+              "properties": {
+                "distance": { "type": "number" },
+                "unit": { "type": "string", "enum": ["miles", "km", "meters"] },
+                "duration": { "type": "integer", "description": "Duration in seconds" },
+                "type": { "type": "string", "enum": ["jog", "walk", "stand"] }
+              }
+            },
+            "sets": {
+              "type": "array",
+              "description": "For ladder/pyramid workouts",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "distance": { "type": "number" },
+                  "unit": { "type": "string" },
+                  "pace": { "type": "string" },
+                  "hrZone": { "type": "string" },
+                  "recovery": { "type": "integer", "description": "Recovery in seconds after this set" }
+                }
+              }
+            }
+          }
+        },
+        "cooldown": {
+          "type": "object",
+          "properties": {
+            "distance": { "type": "number" },
+            "unit": { "type": "string", "enum": ["miles", "km", "meters"] },
+            "pace": { "type": "string" },
+            "hrZone": { "type": "string" },
+            "duration": { "type": "integer" }
+          }
+        }
+      }
+    }
+  }
+}
