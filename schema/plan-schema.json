@@ -277,6 +277,50 @@
         "totalMileage": { "type": "number", "description": "Total planned running miles for the week" },
         "totalHours": { "type": "number", "description": "Total planned hours for the week (running + strength)" },
         "strengthDays": { "type": "integer", "description": "Number of strength sessions this week" },
+        "weeklyNutrition": {
+          "type": "object",
+          "description": "Calculated nutrition targets for this specific week based on training load",
+          "properties": {
+            "dailyCalories": {
+              "type": "integer",
+              "description": "Average daily calorie target including training calories"
+            },
+            "trainingCaloriesPerDay": {
+              "type": "integer",
+              "description": "Additional calories from training averaged per day"
+            },
+            "macros": {
+              "type": "object",
+              "properties": {
+                "protein": {
+                  "type": "object",
+                  "properties": {
+                    "grams": { "type": "integer" },
+                    "percentage": { "type": "integer" }
+                  }
+                },
+                "carbs": {
+                  "type": "object",
+                  "properties": {
+                    "grams": { "type": "integer" },
+                    "percentage": { "type": "integer" }
+                  }
+                },
+                "fat": {
+                  "type": "object",
+                  "properties": {
+                    "grams": { "type": "integer" },
+                    "percentage": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "notes": {
+              "type": "string",
+              "description": "Week-specific nutrition notes"
+            }
+          }
+        },
         "days": {
           "type": "object",
           "properties": {

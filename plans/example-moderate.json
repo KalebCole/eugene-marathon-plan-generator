@@ -127,6 +127,15 @@
       "totalMileage": 25,
       "totalHours": 4.5,
       "strengthDays": 3,
+      "weeklyNutrition": {
+        "dailyCalories": 2800,
+        "trainingCaloriesPerDay": 400,
+        "macros": {
+          "protein": { "grams": 175, "percentage": 25 },
+          "carbs": { "grams": 350, "percentage": 50 },
+          "fat": { "grams": 78, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": {
           "date": "2026-01-13",
@@ -161,6 +170,15 @@
       "totalMileage": 28,
       "totalHours": 5,
       "strengthDays": 3,
+      "weeklyNutrition": {
+        "dailyCalories": 2850,
+        "trainingCaloriesPerDay": 450,
+        "macros": {
+          "protein": { "grams": 178, "percentage": 25 },
+          "carbs": { "grams": 356, "percentage": 50 },
+          "fat": { "grams": 79, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": {
           "date": "2026-01-20",
@@ -195,6 +213,15 @@
       "totalMileage": 32,
       "totalHours": 5.5,
       "strengthDays": 3,
+      "weeklyNutrition": {
+        "dailyCalories": 2900,
+        "trainingCaloriesPerDay": 500,
+        "macros": {
+          "protein": { "grams": 181, "percentage": 25 },
+          "carbs": { "grams": 363, "percentage": 50 },
+          "fat": { "grams": 81, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": {
           "date": "2026-01-27",
@@ -229,6 +256,16 @@
       "totalMileage": 24,
       "totalHours": 4,
       "strengthDays": 1,
+      "weeklyNutrition": {
+        "dailyCalories": 2750,
+        "trainingCaloriesPerDay": 350,
+        "macros": {
+          "protein": { "grams": 172, "percentage": 25 },
+          "carbs": { "grams": 344, "percentage": 50 },
+          "fat": { "grams": 76, "percentage": 25 }
+        },
+        "notes": "Recovery week - maintain calories for adaptation"
+      },
       "days": {
         "monday": {
           "date": "2026-02-03",
@@ -258,6 +295,15 @@
       "totalMileage": 30,
       "totalHours": 5.5,
       "strengthDays": 2,
+      "weeklyNutrition": {
+        "dailyCalories": 2850,
+        "trainingCaloriesPerDay": 450,
+        "macros": {
+          "protein": { "grams": 178, "percentage": 25 },
+          "carbs": { "grams": 356, "percentage": 50 },
+          "fat": { "grams": 79, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": {
           "date": "2026-02-10",
@@ -288,6 +334,16 @@
       "totalMileage": 28,
       "totalHours": 4.5,
       "strengthDays": 1,
+      "weeklyNutrition": {
+        "dailyCalories": 2800,
+        "trainingCaloriesPerDay": 400,
+        "macros": {
+          "protein": { "grams": 175, "percentage": 25 },
+          "carbs": { "grams": 350, "percentage": 50 },
+          "fat": { "grams": 78, "percentage": 25 }
+        },
+        "notes": "Travel week - prioritize protein and hydration"
+      },
       "days": {
         "monday": { "date": "2026-02-17", "running": { "type": "easy", "title": "Travel Run", "description": "Find a route near your location", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
         "tuesday": { "date": "2026-02-18", "running": { "type": "tempo", "title": "Travel Tempo", "description": "Shorter tempo - 3mi total with 1.5mi @ tempo", "totalDistance": 3, "estimatedDuration": 30, "hrZone": "Zone 3" } },
@@ -311,6 +367,16 @@
       "totalMileage": 26,
       "totalHours": 4,
       "strengthDays": 1,
+      "weeklyNutrition": {
+        "dailyCalories": 2750,
+        "trainingCaloriesPerDay": 350,
+        "macros": {
+          "protein": { "grams": 172, "percentage": 25 },
+          "carbs": { "grams": 344, "percentage": 50 },
+          "fat": { "grams": 76, "percentage": 25 }
+        },
+        "notes": "Recovery week - maintain calories for adaptation"
+      },
       "days": {
         "monday": { "date": "2026-02-24", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
         "tuesday": { "date": "2026-02-25", "running": { "type": "intervals", "title": "Strides", "description": "Easy run with 6x100m strides - keep legs fresh", "totalDistance": 4, "estimatedDuration": 45, "hrZone": "Zone 2" } },
@@ -334,6 +400,15 @@
       "totalMileage": 35,
       "totalHours": 6,
       "strengthDays": 2,
+      "weeklyNutrition": {
+        "dailyCalories": 2900,
+        "trainingCaloriesPerDay": 500,
+        "macros": {
+          "protein": { "grams": 181, "percentage": 25 },
+          "carbs": { "grams": 363, "percentage": 50 },
+          "fat": { "grams": 81, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": {
           "date": "2026-03-03",
@@ -361,6 +436,15 @@
       "totalMileage": 40,
       "totalHours": 7,
       "strengthDays": 2,
+      "weeklyNutrition": {
+        "dailyCalories": 2950,
+        "trainingCaloriesPerDay": 550,
+        "macros": {
+          "protein": { "grams": 184, "percentage": 25 },
+          "carbs": { "grams": 369, "percentage": 50 },
+          "fat": { "grams": 82, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": {
           "date": "2026-03-10",
@@ -388,6 +472,16 @@
       "totalMileage": 30,
       "totalHours": 5,
       "strengthDays": 1,
+      "weeklyNutrition": {
+        "dailyCalories": 2800,
+        "trainingCaloriesPerDay": 400,
+        "macros": {
+          "protein": { "grams": 175, "percentage": 25 },
+          "carbs": { "grams": 350, "percentage": 50 },
+          "fat": { "grams": 78, "percentage": 25 }
+        },
+        "notes": "Recovery week - maintain calories for adaptation"
+      },
       "days": {
         "monday": { "date": "2026-03-17", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
         "tuesday": { "date": "2026-03-18", "running": { "type": "tempo", "title": "Short Tempo", "description": "1mi warmup, 2mi tempo, 1mi cooldown", "totalDistance": 4, "estimatedDuration": 40, "hrZone": "Zone 3" } },
@@ -411,6 +505,16 @@
       "totalMileage": 44,
       "totalHours": 7.5,
       "strengthDays": 2,
+      "weeklyNutrition": {
+        "dailyCalories": 3000,
+        "trainingCaloriesPerDay": 600,
+        "macros": {
+          "protein": { "grams": 188, "percentage": 25 },
+          "carbs": { "grams": 375, "percentage": 50 },
+          "fat": { "grams": 83, "percentage": 25 }
+        },
+        "notes": "Peak volume - fuel well for longest long run"
+      },
       "days": {
         "monday": {
           "date": "2026-03-24",
@@ -438,6 +542,15 @@
       "totalMileage": 40,
       "totalHours": 6.5,
       "strengthDays": 1,
+      "weeklyNutrition": {
+        "dailyCalories": 2950,
+        "trainingCaloriesPerDay": 550,
+        "macros": {
+          "protein": { "grams": 184, "percentage": 25 },
+          "carbs": { "grams": 369, "percentage": 50 },
+          "fat": { "grams": 82, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": { "date": "2026-03-31", "running": { "type": "easy", "title": "Recovery Run", "description": "Very easy after long weekend", "totalDistance": 4, "estimatedDuration": 48, "hrZone": "Zone 1-2" } },
         "tuesday": { "date": "2026-04-01", "running": { "type": "intervals", "title": "Sharpening Intervals", "description": "2mi warmup, 4x1000m @ 5K pace, 2min jog recovery, 1mi cooldown", "totalDistance": 6, "estimatedDuration": 55, "hrZone": "Zone 4-5" } },
@@ -461,6 +574,15 @@
       "totalMileage": 35,
       "totalHours": 5.5,
       "strengthDays": 1,
+      "weeklyNutrition": {
+        "dailyCalories": 2850,
+        "trainingCaloriesPerDay": 450,
+        "macros": {
+          "protein": { "grams": 178, "percentage": 25 },
+          "carbs": { "grams": 356, "percentage": 50 },
+          "fat": { "grams": 79, "percentage": 25 }
+        }
+      },
       "days": {
         "monday": { "date": "2026-04-07", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" } },
         "tuesday": { "date": "2026-04-08", "running": { "type": "tempo", "title": "Final Tempo", "description": "1mi warmup, 4mi tempo, 1mi cooldown", "totalDistance": 6, "estimatedDuration": 56, "hrZone": "Zone 3-4" } },
@@ -484,6 +606,16 @@
       "totalMileage": 25,
       "totalHours": 4,
       "strengthDays": 0,
+      "weeklyNutrition": {
+        "dailyCalories": 2700,
+        "trainingCaloriesPerDay": 300,
+        "macros": {
+          "protein": { "grams": 169, "percentage": 25 },
+          "carbs": { "grams": 338, "percentage": 50 },
+          "fat": { "grams": 75, "percentage": 25 }
+        },
+        "notes": "Taper week - maintain nutrition despite lower volume"
+      },
       "days": {
         "monday": { "date": "2026-04-14", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
         "tuesday": { "date": "2026-04-15", "running": { "type": "intervals", "title": "Sharpening Strides", "description": "3mi easy with 6x100m strides", "totalDistance": 4, "estimatedDuration": 45, "hrZone": "Zone 2" } },
@@ -503,6 +635,16 @@
       "totalMileage": 15,
       "totalHours": 2.5,
       "strengthDays": 0,
+      "weeklyNutrition": {
+        "dailyCalories": 2600,
+        "trainingCaloriesPerDay": 200,
+        "macros": {
+          "protein": { "grams": 163, "percentage": 25 },
+          "carbs": { "grams": 325, "percentage": 50 },
+          "fat": { "grams": 72, "percentage": 25 }
+        },
+        "notes": "Race week - carb load Thu/Fri, stay hydrated"
+      },
       "days": {
         "monday": { "date": "2026-04-21", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 3, "estimatedDuration": 33, "hrZone": "Zone 2" } },
         "tuesday": { "date": "2026-04-22", "running": { "type": "intervals", "title": "Final Shakeout", "description": "2mi easy with 4x100m strides at MP", "totalDistance": 3, "estimatedDuration": 35, "hrZone": "Zone 2" } },

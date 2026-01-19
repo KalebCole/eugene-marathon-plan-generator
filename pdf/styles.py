@@ -54,6 +54,13 @@ COLORS = {
     'workout_rest': HexColor('#6b7280'),
     'workout_cross': HexColor('#34d399'),
     'workout_recovery': HexColor('#94a3b8'),
+    # Section colors for week detail page
+    'section_strength': HexColor('#ff6bb3'),  # neon_pink
+    'section_nutrition': HexColor('#a78bfa'),  # light purple
+    'nutrition_box': HexColor('#2d1b4e'),  # deep_purple
+    # Day indicator dots
+    'dot_active': HexColor('#f0f0ff'),  # soft_white - has workout
+    'dot_inactive': HexColor('#4b5563'),  # gray - no workout
 }
 
 # Font sizes
@@ -69,6 +76,8 @@ FONT_SIZES = {
 
 # Strip/row styling
 STRIP_HEIGHT = 0.6 * inch
+STRIP_HEIGHT_COMPACT = 0.45 * inch  # Smaller for week detail sections
+STRIP_HEIGHT_MINI = 0.35 * inch  # For strength rows
 STRIP_RADIUS = 8
 STRIP_PADDING = 10
 
