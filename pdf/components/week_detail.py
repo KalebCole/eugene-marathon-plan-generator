@@ -93,14 +93,26 @@ def draw_week_detail_page(canvas, week_data, week_number):
     canvas.setFont("Helvetica-Bold", FONT_SIZES['page_title'])
     canvas.drawString(MARGIN, title_y, f"Week {week_number}")
 
-    # Phase badge
+    # Phase badge with background (prevents stars from showing through)
     badge_x = MARGIN + 120
     phase_text = phase.upper()
     if is_recovery:
         phase_text = "RECOVERY"
-        canvas.setFillColor(COLORS['neon_pink'])
+        badge_color = COLORS['neon_pink']
     else:
-        canvas.setFillColor(phase_color)
+        badge_color = phase_color
+
+    # Draw badge background
+    badge_text_width = len(phase_text) * 9 + 16  # Approximate width
+    badge_height = 22
+    draw_rounded_rect(
+        canvas, badge_x - 8, title_y - 2,
+        badge_text_width, badge_height,
+        4, COLORS['deep_purple'], alpha=0.95
+    )
+
+    # Draw badge text
+    canvas.setFillColor(badge_color)
     canvas.setFont("Helvetica-Bold", FONT_SIZES['body'])
     canvas.drawString(badge_x, title_y + 5, phase_text)
 
@@ -125,7 +137,8 @@ def draw_week_detail_page(canvas, week_data, week_number):
     # =========================================================================
     # WEEKLY SUMMARY BAR
     # =========================================================================
-    summary_height = 0.85 * inch
+    # Increased height to properly fit three rows: values, labels, day indicators
+    summary_height = 1.1 * inch
     summary_y = current_y - summary_height
 
     draw_rounded_rect(
@@ -134,50 +147,56 @@ def draw_week_detail_page(canvas, week_data, week_number):
         STRIP_RADIUS, COLORS['deep_purple'], alpha=0.9
     )
 
-    # Stats row
-    stats_y = summary_y + summary_height - 0.35 * inch
     col_width = (PAGE_WIDTH - 2 * MARGIN) / 4
 
-    # Miles
+    # Row 1: Stat values (top of box)
+    values_y = summary_y + summary_height - 0.32 * inch
+
+    # Row 2: Unit labels (below values)
+    labels_y = values_y - 20
+
+    # Row 3: Day indicators (bottom, with room for day letter labels)
+    dots_y = summary_y + 0.28 * inch
+
+    # --- Column 1: Miles ---
     canvas.setFillColor(COLORS['soft_white'])
     canvas.setFont("Helvetica-Bold", FONT_SIZES['subsection'])
-    canvas.drawString(MARGIN + 15, stats_y, f"{total_mileage}")
+    canvas.drawString(MARGIN + 15, values_y, f"{total_mileage}")
     canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-    canvas.drawString(MARGIN + 15, stats_y - 16, "miles")
+    canvas.drawString(MARGIN + 15, labels_y, "miles")
 
-    # Hours
+    # --- Column 2: Hours ---
+    canvas.setFillColor(COLORS['soft_white'])
     canvas.setFont("Helvetica-Bold", FONT_SIZES['subsection'])
-    canvas.drawString(MARGIN + col_width + 15, stats_y, f"~{total_hours}")
+    canvas.drawString(MARGIN + col_width + 15, values_y, f"~{total_hours}")
     canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-    canvas.drawString(MARGIN + col_width + 15, stats_y - 16, "hours")
+    canvas.drawString(MARGIN + col_width + 15, labels_y, "hours")
 
-    # Strength
+    # --- Column 3: Strength ---
     canvas.setFillColor(COLORS['neon_pink'])
     canvas.setFont("Helvetica-Bold", FONT_SIZES['subsection'])
-    canvas.drawString(MARGIN + col_width * 2 + 15, stats_y, f"{strength_days}")
+    canvas.drawString(MARGIN + col_width * 2 + 15, values_y, f"{strength_days}")
     canvas.setFillColor(COLORS['soft_white'])
     canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-    canvas.drawString(MARGIN + col_width * 2 + 15, stats_y - 16, "strength")
+    canvas.drawString(MARGIN + col_width * 2 + 15, labels_y, "strength")
 
-    # Calories
+    # --- Column 4: Calories ---
     daily_calories = weekly_nutrition.get('dailyCalories', 0)
     canvas.setFillColor(COLORS['cyan_glow'])
     canvas.setFont("Helvetica-Bold", FONT_SIZES['subsection'])
-    canvas.drawString(MARGIN + col_width * 3 + 15, stats_y, f"~{daily_calories}")
+    canvas.drawString(MARGIN + col_width * 3 + 15, values_y, f"~{daily_calories}")
     canvas.setFillColor(COLORS['soft_white'])
     canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-    canvas.drawString(MARGIN + col_width * 3 + 15, stats_y - 16, "cal/day")
+    canvas.drawString(MARGIN + col_width * 3 + 15, labels_y, "cal/day")
 
-    # Day indicator dots row
-    dots_y = summary_y + 0.22 * inch
-
+    # --- Day indicator dots row (spans bottom of summary bar) ---
     canvas.setFillColor(COLORS['soft_white'])
     canvas.setFont("Helvetica", FONT_SIZES['caption'])
-    canvas.drawString(MARGIN + 15, dots_y + 5, "Running:")
-    draw_day_dots(canvas, MARGIN + 85, dots_y + 8, days, 'running', days_order)
+    canvas.drawString(MARGIN + 15, dots_y, "Running:")
+    draw_day_dots(canvas, MARGIN + 75, dots_y + 3, days, 'running', days_order)
 
-    canvas.drawString(MARGIN + col_width * 2 + 15, dots_y + 5, "Strength:")
-    draw_day_dots(canvas, MARGIN + col_width * 2 + 90, dots_y + 8, days, 'strength', days_order)
+    canvas.drawString(MARGIN + col_width * 2 + 15, dots_y, "Strength:")
+    draw_day_dots(canvas, MARGIN + col_width * 2 + 80, dots_y + 3, days, 'strength', days_order)
 
     current_y = summary_y - 0.2 * inch
 
