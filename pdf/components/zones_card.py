@@ -139,12 +139,27 @@ def draw_zones_card(canvas, plan_data):
 
         strip_y -= strip_height + 8
 
-    # Footer note
-    footer_y = MARGIN + 0.3 * inch
-    canvas.setFillColor(COLORS['soft_white'])
-    canvas.setFont("Helvetica-Oblique", FONT_SIZES['caption'])
+    # Footer note - positioned below the last HR zone with proper spacing
+    footer_y = strip_y - 0.15 * inch  # Position below last zone strip
     note = "80% of training should be in Zone 2 (Easy/Aerobic)"
-    text_width = canvas.stringWidth(note, "Helvetica-Oblique", FONT_SIZES['caption'])
+    canvas.setFont("Helvetica-Oblique", FONT_SIZES['body_small'])
+    text_width = canvas.stringWidth(note, "Helvetica-Oblique", FONT_SIZES['body_small'])
+
+    # Draw background box behind the text (ensures visibility over stars)
+    box_padding = 12
+    box_width = text_width + box_padding * 2
+    box_height = 24
+    box_x = (PAGE_WIDTH - box_width) / 2
+    box_y = footer_y - 6
+
+    draw_rounded_rect(
+        canvas, box_x, box_y,
+        box_width, box_height,
+        6, COLORS['deep_purple'], alpha=0.95
+    )
+
+    # Draw text on top of background
+    canvas.setFillColor(COLORS['cyan_glow'])
     canvas.drawString((PAGE_WIDTH - text_width) / 2, footer_y, note)
 
     canvas.showPage()

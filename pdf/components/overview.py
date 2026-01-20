@@ -94,45 +94,46 @@ def draw_overview_pages(canvas, plan_data):
 
         # Week number
         canvas.setFillColor(COLORS['soft_white'])
-        canvas.setFont("Helvetica-Bold", FONT_SIZES['body'])
-        week_text = f"Week {week_num}"
+        canvas.setFont("Helvetica-Bold", FONT_SIZES['body_small'])
+        week_text = f"Wk {week_num}"
         canvas.drawString(MARGIN + 18, current_y - strip_height + 14, week_text)
 
         # Phase tag
-        phase_x = MARGIN + 90
+        phase_x = MARGIN + 65
         canvas.setFillColor(phase_color)
-        canvas.setFont("Helvetica-Bold", FONT_SIZES['body_small'])
-        phase_label = phase.upper()
+        canvas.setFont("Helvetica-Bold", FONT_SIZES['caption'])
+        phase_label = phase.upper()[:3]  # Shortened: BAS, BUI, PEA, TAP
         if is_recovery:
-            phase_label = "RECOVERY"
+            phase_label = "REC"
         canvas.drawString(phase_x, current_y - strip_height + 14, phase_label)
 
         # Total miles
-        miles_x = MARGIN + 180
+        miles_x = MARGIN + 105
         canvas.setFillColor(COLORS['soft_white'])
-        canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-        canvas.drawString(miles_x, current_y - strip_height + 14, f"{total_mileage} mi")
+        canvas.setFont("Helvetica", FONT_SIZES['caption'])
+        canvas.drawString(miles_x, current_y - strip_height + 14, f"{total_mileage}mi")
 
         # Long run
-        long_x = MARGIN + 240
+        long_x = MARGIN + 150
         canvas.setFillColor(COLORS['cyan_glow'])
-        canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-        canvas.drawString(long_x, current_y - strip_height + 14, f"Long: {long_run_dist} mi")
+        canvas.setFont("Helvetica", FONT_SIZES['caption'])
+        canvas.drawString(long_x, current_y - strip_height + 14, f"LR:{long_run_dist}mi")
 
-        # Focus (truncated if needed)
+        # Focus/Description - now with much more space, no truncation
         if focus:
-            focus_x = MARGIN + 340
-            max_focus_width = strip_width - 360
+            focus_x = MARGIN + 210
+            max_focus_width = strip_width - 230  # Much more space now
             canvas.setFillColor(COLORS['soft_white'])
             canvas.setFont("Helvetica-Oblique", FONT_SIZES['caption'])
 
-            # Truncate focus text if too long
+            # Only truncate if absolutely necessary (very long text)
+            display_focus = focus
             if canvas.stringWidth(focus, "Helvetica-Oblique", FONT_SIZES['caption']) > max_focus_width:
-                while canvas.stringWidth(focus + "...", "Helvetica-Oblique", FONT_SIZES['caption']) > max_focus_width and len(focus) > 0:
-                    focus = focus[:-1]
-                focus += "..."
+                while canvas.stringWidth(display_focus + "…", "Helvetica-Oblique", FONT_SIZES['caption']) > max_focus_width and len(display_focus) > 0:
+                    display_focus = display_focus[:-1]
+                display_focus += "…"
 
-            canvas.drawString(focus_x, current_y - strip_height + 14, focus)
+            canvas.drawString(focus_x, current_y - strip_height + 14, display_focus)
 
         current_y -= strip_height + strip_spacing
         week_count += 1
