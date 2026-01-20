@@ -21,7 +21,8 @@ eugene-marathon-plan-generator/
 │   ├── hr-zones.md        # Three HR zone methods
 │   ├── nutrition-timing.md# TDEE, macros, meal timing
 │   ├── strength-integration.md # Periodized lifting guidance
-│   └── periodization.md   # 15-week phase breakdown
+│   ├── periodization.md   # 15-week phase breakdown
+│   └── availability-scheduling.md # Handling athlete availability constraints
 │
 ├── intake/                # Athlete data collection
 │   └── questions.md       # 17-question intake template
@@ -101,8 +102,17 @@ When asked to generate plans:
 - Recent race time (for pace zone calculation)
 - Heart rate data: Max HR, LTHR (if known), Resting HR
 - Body composition: height, weight, age, sex (for TDEE/nutrition)
-- Schedule: available days/times, blocked dates
+- Running availability: specific days and preferred long run day
+- Strength training availability: specific days and preferred time
+- Blocked dates: date ranges with type (rest vs cross-training)
 - Strength training preferences
+
+**Availability Handling:** See `guides/availability-scheduling.md` for the complete algorithm. Key points:
+- Workouts are scheduled ONLY on available days
+- Long run has highest priority and is never skipped
+- When workouts must be moved, add adjustment tracking to the day
+- Cross-training blocked dates (e.g., skiing) are marked differently from rest blocked dates
+- Volume is NOT redistributed when workouts are dropped (injury prevention)
 
 **Reference the example:** `plans/example-moderate.json` shows a complete plan for a 1:52:30 half marathon runner targeting a 4:00 marathon.
 

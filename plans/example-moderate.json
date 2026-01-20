@@ -33,9 +33,27 @@
     },
     "weeklyHoursLimit": 7,
     "blockedDates": [
-      { "start": "2026-02-15", "end": "2026-02-22", "reason": "Travel" },
-      { "start": "2026-03-08", "end": "2026-03-08", "reason": "Wedding" }
+      {
+        "startDate": "2026-02-15",
+        "endDate": "2026-02-22",
+        "reason": "Work travel",
+        "type": "rest"
+      },
+      {
+        "startDate": "2026-03-07",
+        "endDate": "2026-03-08",
+        "reason": "Skiing trip",
+        "type": "cross-training",
+        "crossTrainingActivity": "Skiing"
+      }
     ],
+    "athleteAvailability": {
+      "runningDays": ["monday", "tuesday", "wednesday", "friday", "saturday", "sunday"],
+      "strengthDays": ["tuesday", "thursday", "saturday"],
+      "preferredRunTime": "morning",
+      "preferredStrengthTime": "evening",
+      "preferredLongRunDay": "sunday"
+    },
     "goal": "target_time"
   },
   "paceZones": {

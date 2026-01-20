@@ -130,12 +130,61 @@
         "weeklyHoursLimit": { "type": "number" },
         "blockedDates": {
           "type": "array",
+          "description": "Date ranges when athlete is unavailable for training",
           "items": {
             "type": "object",
+            "required": ["startDate", "endDate", "type"],
             "properties": {
-              "start": { "type": "string", "format": "date" },
-              "end": { "type": "string", "format": "date" },
-              "reason": { "type": "string" }
+              "startDate": { "type": "string", "format": "date" },
+              "endDate": { "type": "string", "format": "date" },
+              "reason": {
+                "type": "string",
+                "description": "Why unavailable (for display in PDF)"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["rest", "cross-training"],
+                "description": "rest = no training; cross-training = active but no running"
+              },
+              "crossTrainingActivity": {
+                "type": "string",
+                "description": "Activity name if type is cross-training (e.g., 'Skiing', 'Hiking')"
+              }
+            }
+          }
+        },
+        "athleteAvailability": {
+          "type": "object",
+          "description": "Detailed availability for scheduling workouts",
+          "properties": {
+            "runningDays": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+              },
+              "description": "Days available for running workouts"
+            },
+            "strengthDays": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+              },
+              "description": "Days available for strength training"
+            },
+            "preferredRunTime": {
+              "type": "string",
+              "enum": ["morning", "afternoon", "evening", "flexible"]
+            },
+            "preferredStrengthTime": {
+              "type": "string",
+              "enum": ["morning", "afternoon", "evening", "flexible"]
+            },
+            "preferredLongRunDay": {
+              "type": "string",
+              "enum": ["friday", "saturday", "sunday"],
+              "description": "Preferred day for long runs"
             }
           }
         },
@@ -344,7 +393,43 @@
         "running": { "$ref": "#/definitions/runningWorkout" },
         "strength": { "$ref": "#/definitions/strengthSession" },
         "nutrition": { "$ref": "#/definitions/dailyNutrition" },
-        "notes": { "type": "string" }
+        "notes": { "type": "string" },
+        "adjustment": {
+          "type": "object",
+          "description": "Tracking if this day's workout was modified due to availability constraints",
+          "properties": {
+            "wasAdjusted": {
+              "type": "boolean",
+              "description": "True if workout was moved or modified"
+            },
+            "originalDay": {
+              "type": "string",
+              "description": "The day this workout was originally scheduled for"
+            },
+            "reason": {
+              "type": "string",
+              "description": "Why the adjustment was made (e.g., 'Sunday blocked for running')"
+            }
+          }
+        },
+        "crossTraining": {
+          "type": "object",
+          "description": "Cross-training activity if this is a blocked cross-training day",
+          "properties": {
+            "activity": {
+              "type": "string",
+              "description": "Name of the activity (e.g., 'Skiing', 'Hiking')"
+            },
+            "notes": {
+              "type": "string",
+              "description": "Additional context about the cross-training"
+            }
+          }
+        },
+        "isBlockedDay": {
+          "type": "boolean",
+          "description": "True if this day falls within a blocked date range"
+        }
       }
     },
     "runningWorkout": {
