@@ -49,26 +49,49 @@ eugene-marathon-plan-generator/
 │   └── fonts.json         # Typography (Pacifico, Montserrat, Open Sans)
 │
 ├── workflows/             # Automation
-│   └── google-form-to-github.json # n8n workflow (disabled)
+│   └── google-form-to-github.json # n8n workflow
+│
+├── scripts/               # Automation scripts
+│   ├── generate_plan.py   # Claude API plan generation
+│   ├── send_notification.py # Email notifications
+│   └── prompt_template.md # System prompt for Claude
+│
+├── .github/workflows/     # GitHub Actions
+│   └── generate-plan.yml  # Auto-generate plans on intake
+│
+├── specs/                 # Feature specifications
+│   └── *.md               # PRDs and specs
 │
 └── output/                # Generated PDF artifacts
-    └── EXAMPLE-eugene-marathon-4hr-plan-20260115.pdf
+    └── *.pdf
 ```
 
 ## Workflow Overview
 
+### Automated Flow (Production)
+
 ```
-1. Athlete fills Google Form (or answers questions.md)
+1. Athlete fills Google Form
          ↓
-2. N8N workflow commits intake data to /intake (optional)
+2. n8n workflow polls Google Sheet, commits intake JSON to /intake
          ↓
-3. Claude generates 3 plan options using schema/plan-schema.json
+3. GitHub Actions triggers on new intake file
          ↓
-4. Plans saved to /plans/ as JSON files
+4. scripts/generate_plan.py calls Claude API to generate plan
          ↓
 5. PDF generator renders branded document
          ↓
-6. PDF output to /output/ directory
+6. Email notification sent to athlete with PDF link
+```
+
+### Manual Flow (Development)
+
+```
+1. Collect athlete data using intake/questions.md
+         ↓
+2. Generate plan manually with Claude (or run scripts/generate_plan.py)
+         ↓
+3. Run: python pdf/generate_pdf.py plans/<plan>.json output/<plan>.pdf
 ```
 
 ## Auto-Date Calculation
@@ -214,11 +237,43 @@ When scheduling workouts:
 
 ## Technical Stack
 
-- **Python 3** - PDF generation
+- **Python 3** - PDF generation and automation scripts
 - **ReportLab 4.0.0+** - PDF rendering library
+- **Anthropic SDK** - Claude API for plan generation
+- **SendGrid** - Email notifications
 - **JSON Schema (Draft-07)** - Plan validation
 - **Markdown** - Documentation and guides
 - **n8n** - Workflow automation (Google Form → GitHub)
+- **GitHub Actions** - CI/CD for automated plan generation
+
+## Automation Setup
+
+### Required GitHub Secrets
+
+| Secret | Purpose |
+|--------|---------|
+| `ANTHROPIC_API_KEY` | Claude API access for plan generation |
+| `SENDGRID_API_KEY` | Email notifications to athletes |
+| `NOTIFICATION_FROM_EMAIL` | Sender email address |
+
+### n8n Workflow Setup
+
+1. Import `workflows/google-form-to-github.json` into n8n
+2. Configure Google Sheets OAuth credentials
+3. Configure GitHub PAT credentials
+4. Update the Google Sheet document ID to match your form responses
+5. Activate the workflow
+
+### Testing the Pipeline
+
+```bash
+# Test plan generation locally
+export ANTHROPIC_API_KEY="your-key"
+python scripts/generate_plan.py intake/test-submission.json
+
+# Test PDF generation
+python pdf/generate_pdf.py plans/test-plan.json output/test.pdf
+```
 
 ## Key Files Reference
 
@@ -229,3 +284,7 @@ When scheduling workouts:
 | `intake/questions.md` | 17-question athlete intake |
 | `guides/*.md` | Training science documentation |
 | `brand/colors.json` | Phase and workout color mappings |
+| `scripts/generate_plan.py` | Automated plan generation via Claude API |
+| `scripts/send_notification.py` | Email athlete when plan is ready |
+| `.github/workflows/generate-plan.yml` | CI/CD automation |
+| `workflows/google-form-to-github.json` | n8n workflow for form processing |

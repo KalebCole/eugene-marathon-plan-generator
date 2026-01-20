@@ -1,0 +1,88 @@
+name: Generate Training Plan
+
+on:
+  push:
+    paths:
+      - 'intake/*.json'
+    branches:
+      - main
+      - master
+
+jobs:
+  generate-plan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need previous commit to detect new files
+
+      - name: Get new intake files
+        id: new-files
+        run: |
+          # Get list of new/modified intake JSON files
+          NEW_FILES=$(git diff --name-only HEAD~1 HEAD -- 'intake/*.json' | tr '\n' ' ')
+          echo "files=$NEW_FILES" >> $GITHUB_OUTPUT
+          echo "Found new intake files: $NEW_FILES"
+
+      - name: Set up Python
+        if: steps.new-files.outputs.files != ''
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        if: steps.new-files.outputs.files != ''
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate training plans
+        if: steps.new-files.outputs.files != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          for intake_file in ${{ steps.new-files.outputs.files }}; do
+            echo "Processing: $intake_file"
+            python scripts/generate_plan.py "$intake_file"
+          done
+
+      - name: Generate PDFs
+        if: steps.new-files.outputs.files != ''
+        run: |
+          # Find newly created plan files and generate PDFs
+          for plan_file in plans/*-generated-*.json; do
+            if [ -f "$plan_file" ]; then
+              echo "Generating PDF for: $plan_file"
+              output_name=$(basename "$plan_file" .json)
+              python pdf/generate_pdf.py "$plan_file" "output/${output_name}.pdf"
+            fi
+          done
+
+      - name: Commit generated files
+        if: steps.new-files.outputs.files != ''
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # Add generated plans and PDFs
+          git add plans/*.json output/*.pdf
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No new plans generated"
+          else
+            git commit -m "Auto-generate training plans and PDFs"
+            git push
+          fi
+
+      - name: Send email notification
+        if: steps.new-files.outputs.files != ''
+        env:
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          NOTIFICATION_FROM_EMAIL: ${{ secrets.NOTIFICATION_FROM_EMAIL }}
+        run: |
+          for intake_file in ${{ steps.new-files.outputs.files }}; do
+            python scripts/send_notification.py "$intake_file"
+          done
