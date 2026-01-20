@@ -139,8 +139,8 @@ def draw_zones_card(canvas, plan_data):
 
         strip_y -= strip_height + 8
 
-    # Footer note - with background box for visibility over stars
-    footer_y = MARGIN + 0.5 * inch
+    # Footer note - positioned below the last HR zone with proper spacing
+    footer_y = strip_y - 0.15 * inch  # Position below last zone strip
     note = "80% of training should be in Zone 2 (Easy/Aerobic)"
     canvas.setFont("Helvetica-Oblique", FONT_SIZES['body_small'])
     text_width = canvas.stringWidth(note, "Helvetica-Oblique", FONT_SIZES['body_small'])

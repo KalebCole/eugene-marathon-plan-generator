@@ -257,11 +257,20 @@ def draw_week_detail_page(canvas, week_data, week_number):
             canvas.setFont("Helvetica", FONT_SIZES['caption'])
             canvas.drawString(MARGIN + 50, current_y - strip_height + strip_height/2, formatted_date)
 
-        # Workout title
+        # Workout title - with truncation to prevent overflow into distance column
         workout_title = running.get('title', 'Rest Day')
         canvas.setFillColor(workout_color)
         canvas.setFont("Helvetica-Bold", FONT_SIZES['body_small'])
-        canvas.drawString(MARGIN + 95, current_y - strip_height + strip_height/2, workout_title)
+        title_x = MARGIN + 95
+        max_title_width = 155  # Space before distance column (MARGIN + 260 - MARGIN + 95 - padding)
+
+        display_title = workout_title
+        if canvas.stringWidth(workout_title, "Helvetica-Bold", FONT_SIZES['body_small']) > max_title_width:
+            while canvas.stringWidth(display_title + "…", "Helvetica-Bold", FONT_SIZES['body_small']) > max_title_width and len(display_title) > 0:
+                display_title = display_title[:-1]
+            display_title += "…"
+
+        canvas.drawString(title_x, current_y - strip_height + strip_height/2, display_title)
 
         # Distance
         distance = running.get('totalDistance', 0)
