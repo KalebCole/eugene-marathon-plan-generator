@@ -1,0 +1,25 @@
+{
+  "name": "eugene-marathon-plan-generator",
+  "version": "1.0.0",
+  "description": "Generate personalized marathon training plans from athlete intake data",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node index.ts",
+    "generate": "ts-node index.ts --input ../intake/sample.json --output ../plans/"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "date-fns": "^3.6.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

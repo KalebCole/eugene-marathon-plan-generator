@@ -1,0 +1,41 @@
+{
+  "submittedAt": "2026-01-20T12:00:00Z",
+
+  "recentRace": {
+    "raw": "1:52:30 half marathon last October"
+  },
+
+  "availableDays": {
+    "weekday": "Mon/Wed/Fri mornings before 7am, Tuesday evenings",
+    "weekend": "Sundays work best for long runs, Saturdays flexible"
+  },
+
+  "weeklyHoursLimit": "8-10 hours",
+
+  "heartRate": {
+    "maxHR": "185",
+    "lthr": "168",
+    "restingHR": "52"
+  },
+
+  "strengthPreferences": {
+    "daysPerWeek": "2-3 days",
+    "preferredTimes": "Tuesday and Thursday evenings, maybe Saturday",
+    "restrictions": "No heavy squats the day before a long run"
+  },
+
+  "bodyComposition": {
+    "heightWeight": "5'10\", 165 lbs",
+    "age": "32",
+    "sex": "Male",
+    "activityLevel": "Desk job, mostly sedentary outside training"
+  },
+
+  "dietaryRestrictions": "No restrictions, try to eat clean",
+
+  "blockedDates": "Feb 15-22 traveling, wedding March 8",
+
+  "goal": "Target a specific time",
+
+  "targetTime": "sub-4:00"
+}
