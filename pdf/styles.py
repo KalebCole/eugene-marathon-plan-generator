@@ -61,6 +61,9 @@ COLORS = {
     # Day indicator dots
     'dot_active': HexColor('#f0f0ff'),  # soft_white - has workout
     'dot_inactive': HexColor('#4b5563'),  # gray - no workout
+    # Adjustment notes
+    'adjustment_note': HexColor('#9ca3af'),  # Muted gray for "moved from" text
+    'blocked_day': HexColor('#6b7280'),  # Gray for blocked days
 }
 
 # Font sizes

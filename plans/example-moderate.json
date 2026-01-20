@@ -414,9 +414,9 @@
       "weeksUntilRace": 8,
       "isRecoveryWeek": false,
       "phase": "build",
-      "focus": "Resume build - increase volume, wedding on Sunday",
-      "totalMileage": 35,
-      "totalHours": 6,
+      "focus": "Resume build - skiing weekend adjusted schedule",
+      "totalMileage": 31,
+      "totalHours": 5.5,
       "strengthDays": 2,
       "weeklyNutrition": {
         "dailyCalories": 2900,
@@ -439,10 +439,34 @@
           "running": { "type": "easy", "title": "Easy Run", "totalDistance": 5, "estimatedDuration": 55, "hrZone": "Zone 2" },
           "strength": { "scheduled": true, "type": "upper_body", "timing": "After run", "duration": 30 }
         },
-        "thursday": { "date": "2026-03-06", "running": { "type": "rest", "title": "Rest Day" } },
-        "friday": { "date": "2026-03-07", "running": { "type": "easy", "title": "Easy Run", "totalDistance": 4, "estimatedDuration": 44, "hrZone": "Zone 2" } },
-        "saturday": { "date": "2026-03-08", "running": { "type": "long", "title": "Long Run (moved)", "description": "Long run moved to Saturday due to wedding", "totalDistance": 14, "estimatedDuration": 154, "hrZone": "Zone 2" } },
-        "sunday": { "date": "2026-03-09", "running": { "type": "rest", "title": "WEDDING DAY", "notes": "Enjoy the celebration!" } }
+        "thursday": {
+          "date": "2026-03-06",
+          "running": { "type": "long", "title": "Long Run", "description": "14mi progression - last 4mi at moderate pace", "totalDistance": 14, "estimatedDuration": 154, "hrZone": "Zone 2" },
+          "adjustment": {
+            "wasAdjusted": true,
+            "originalDay": "saturday",
+            "reason": "Moved from Saturday (skiing trip)"
+          }
+        },
+        "friday": {
+          "date": "2026-03-07",
+          "running": { "type": "cross_training", "title": "Cross-Training Day" },
+          "crossTraining": {
+            "activity": "Skiing",
+            "notes": "Day 1 of skiing trip - great aerobic cross-training"
+          },
+          "isBlockedDay": true
+        },
+        "saturday": {
+          "date": "2026-03-08",
+          "running": { "type": "cross_training", "title": "Cross-Training Day" },
+          "crossTraining": {
+            "activity": "Skiing",
+            "notes": "Day 2 of skiing trip - enjoy the slopes!"
+          },
+          "isBlockedDay": true
+        },
+        "sunday": { "date": "2026-03-09", "running": { "type": "rest", "title": "Recovery Day", "notes": "Rest after skiing weekend" } }
       }
     },
     {

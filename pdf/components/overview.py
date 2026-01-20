@@ -3,11 +3,121 @@ Training Overview Pages - Weekly strips showing all weeks
 """
 
 from reportlab.lib.units import inch
+from datetime import datetime
 from ..styles import (
     PAGE_WIDTH, PAGE_HEIGHT, MARGIN, COLORS, FONT_SIZES,
     STRIP_RADIUS, draw_twilight_gradient, draw_stars,
     draw_rounded_rect, get_phase_color
 )
+
+
+def draw_constraints_section(canvas, plan_data, start_y):
+    """Draw the schedule constraints section showing availability info"""
+    athlete = plan_data.get('athlete', {})
+    availability = athlete.get('athleteAvailability', {})
+    blocked_dates = athlete.get('blockedDates', [])
+
+    # Only draw if we have availability data
+    if not availability and not blocked_dates:
+        return start_y
+
+    # Section dimensions
+    section_width = PAGE_WIDTH - 2 * MARGIN
+    line_height = 18
+    padding = 12
+
+    # Calculate section height based on content
+    num_lines = 0
+    if availability.get('runningDays'):
+        num_lines += 1
+    if availability.get('strengthDays'):
+        num_lines += 1
+    if availability.get('preferredLongRunDay'):
+        num_lines += 1
+    if blocked_dates:
+        num_lines += 1 + len(blocked_dates)  # Header + each blocked date
+
+    section_height = (num_lines * line_height) + (padding * 2) + 10
+
+    # Draw section background
+    section_y = start_y - section_height
+    draw_rounded_rect(
+        canvas, MARGIN, section_y,
+        section_width, section_height,
+        STRIP_RADIUS, COLORS['deep_purple'], alpha=0.9
+    )
+
+    # Section title
+    current_y = start_y - padding - 5
+    canvas.setFillColor(COLORS['cyan_glow'])
+    canvas.setFont("Helvetica-Bold", FONT_SIZES['body_small'])
+    canvas.drawString(MARGIN + padding, current_y, "SCHEDULE CONSTRAINTS")
+    current_y -= line_height + 5
+
+    # Running days
+    if availability.get('runningDays'):
+        days = availability['runningDays']
+        days_str = ', '.join([d.capitalize()[:3] for d in days])
+        canvas.setFillColor(COLORS['soft_white'])
+        canvas.setFont("Helvetica", FONT_SIZES['caption'])
+        canvas.drawString(MARGIN + padding, current_y, f"Running: {days_str}")
+        current_y -= line_height
+
+    # Strength days
+    if availability.get('strengthDays'):
+        days = availability['strengthDays']
+        days_str = ', '.join([d.capitalize()[:3] for d in days])
+        canvas.setFillColor(COLORS['soft_white'])
+        canvas.setFont("Helvetica", FONT_SIZES['caption'])
+        canvas.drawString(MARGIN + padding, current_y, f"Strength: {days_str}")
+        current_y -= line_height
+
+    # Long run preference
+    if availability.get('preferredLongRunDay'):
+        long_day = availability['preferredLongRunDay'].capitalize()
+        canvas.setFillColor(COLORS['soft_white'])
+        canvas.setFont("Helvetica", FONT_SIZES['caption'])
+        canvas.drawString(MARGIN + padding, current_y, f"Long Run: {long_day}")
+        current_y -= line_height
+
+    # Blocked dates
+    if blocked_dates:
+        current_y -= 5  # Extra spacing
+        canvas.setFillColor(COLORS['neon_pink'])
+        canvas.setFont("Helvetica-Bold", FONT_SIZES['caption'])
+        canvas.drawString(MARGIN + padding, current_y, "Blocked Dates:")
+        current_y -= line_height
+
+        for blocked in blocked_dates:
+            start_date = blocked.get('startDate', '')
+            end_date = blocked.get('endDate', '')
+            reason = blocked.get('reason', 'Unavailable')
+            block_type = blocked.get('type', 'rest')
+
+            # Format dates
+            try:
+                start_dt = datetime.strptime(start_date, '%Y-%m-%d')
+                end_dt = datetime.strptime(end_date, '%Y-%m-%d')
+                if start_date == end_date:
+                    date_str = start_dt.strftime('%b %d')
+                else:
+                    date_str = f"{start_dt.strftime('%b %d')}-{end_dt.strftime('%d')}"
+            except ValueError:
+                date_str = f"{start_date} - {end_date}"
+
+            # Type indicator
+            type_label = "rest" if block_type == "rest" else "cross-training"
+            if block_type == "cross-training":
+                activity = blocked.get('crossTrainingActivity', '')
+                if activity:
+                    type_label = activity.lower()
+
+            canvas.setFillColor(COLORS['soft_white'])
+            canvas.setFont("Helvetica", FONT_SIZES['caption'])
+            canvas.drawString(MARGIN + padding + 10, current_y, f"• {date_str}: {reason} ({type_label})")
+            current_y -= line_height
+
+    return section_y - 0.2 * inch
 
 
 def draw_overview_pages(canvas, plan_data):
@@ -33,13 +143,14 @@ def draw_overview_pages(canvas, plan_data):
     canvas.setFont("Helvetica", FONT_SIZES['body'])
     canvas.drawString(MARGIN, subtitle_y, f"{total_weeks} weeks to race day")
 
+    # Draw schedule constraints section (if availability data exists)
+    current_y = draw_constraints_section(canvas, plan_data, subtitle_y - 0.4 * inch)
+
     # Calculate strip dimensions
     strip_width = PAGE_WIDTH - 2 * MARGIN
     strip_height = 0.45 * inch
     strip_spacing = 6
-    strips_per_page = 12  # How many weeks fit on one page
-
-    current_y = subtitle_y - 0.6 * inch
+    strips_per_page = 10  # Reduced to accommodate constraints section
     week_count = 0
 
     for week in weeks:

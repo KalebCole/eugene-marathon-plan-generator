@@ -222,27 +222,47 @@ def draw_week_detail_page(canvas, week_data, week_number):
 
         running = day_data.get('running', {})
         workout_type = running.get('type', 'rest')
-        workout_color = get_workout_color(workout_type)
+        adjustment = day_data.get('adjustment', {})
+        cross_training = day_data.get('crossTraining', {})
+        is_blocked = day_data.get('isBlockedDay', False)
+
+        # Determine if we need extra height for adjustment note
+        has_adjustment_note = adjustment.get('wasAdjusted', False)
+        actual_strip_height = strip_height + (12 if has_adjustment_note else 0)
+
+        # Determine workout color - special handling for cross-training and blocked days
+        if cross_training.get('activity'):
+            workout_color = COLORS['workout_cross']
+            workout_type = 'cross_training'
+        elif is_blocked and workout_type == 'rest':
+            workout_color = COLORS['blocked_day']
+        else:
+            workout_color = get_workout_color(workout_type)
 
         # Draw strip background
         draw_rounded_rect(
-            canvas, MARGIN, current_y - strip_height,
-            strip_width, strip_height,
+            canvas, MARGIN, current_y - actual_strip_height,
+            strip_width, actual_strip_height,
             STRIP_RADIUS, COLORS['strip_purple'], alpha=0.8
         )
 
         # Workout type color indicator
         bar_width = 5
         draw_rounded_rect(
-            canvas, MARGIN + 3, current_y - strip_height + 6,
-            bar_width, strip_height - 12,
+            canvas, MARGIN + 3, current_y - actual_strip_height + 6,
+            bar_width, actual_strip_height - 12,
             2, workout_color, alpha=1.0
         )
+
+        # Calculate main content Y position (centered in strip, higher if adjustment note)
+        main_y = current_y - actual_strip_height + actual_strip_height/2
+        if has_adjustment_note:
+            main_y += 6  # Shift up to make room for note
 
         # Day label
         canvas.setFillColor(COLORS['soft_white'])
         canvas.setFont("Helvetica-Bold", FONT_SIZES['body_small'])
-        canvas.drawString(MARGIN + 14, current_y - strip_height + strip_height/2, day_labels[i])
+        canvas.drawString(MARGIN + 14, main_y, day_labels[i])
 
         # Date
         date_str = day_data.get('date', '')
@@ -255,14 +275,18 @@ def draw_week_detail_page(canvas, week_data, week_number):
                 formatted_date = ''
             canvas.setFillColor(COLORS['soft_white'])
             canvas.setFont("Helvetica", FONT_SIZES['caption'])
-            canvas.drawString(MARGIN + 50, current_y - strip_height + strip_height/2, formatted_date)
+            canvas.drawString(MARGIN + 50, main_y, formatted_date)
 
-        # Workout title - with truncation to prevent overflow into distance column
-        workout_title = running.get('title', 'Rest Day')
+        # Workout title - special handling for cross-training
+        if cross_training.get('activity'):
+            workout_title = f"{cross_training['activity']} (Cross-Training)"
+        else:
+            workout_title = running.get('title', 'Rest Day')
+
         canvas.setFillColor(workout_color)
         canvas.setFont("Helvetica-Bold", FONT_SIZES['body_small'])
         title_x = MARGIN + 95
-        max_title_width = 155  # Space before distance column (MARGIN + 260 - MARGIN + 95 - padding)
+        max_title_width = 155
 
         display_title = workout_title
         if canvas.stringWidth(workout_title, "Helvetica-Bold", FONT_SIZES['body_small']) > max_title_width:
@@ -270,48 +294,59 @@ def draw_week_detail_page(canvas, week_data, week_number):
                 display_title = display_title[:-1]
             display_title += "…"
 
-        canvas.drawString(title_x, current_y - strip_height + strip_height/2, display_title)
+        canvas.drawString(title_x, main_y, display_title)
 
-        # Distance
+        # Distance (skip for cross-training)
         distance = running.get('totalDistance', 0)
-        if distance:
+        if distance and not cross_training.get('activity'):
             canvas.setFillColor(COLORS['soft_white'])
             canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-            canvas.drawString(MARGIN + 260, current_y - strip_height + strip_height/2, f"{distance} mi")
+            canvas.drawString(MARGIN + 260, main_y, f"{distance} mi")
         else:
             canvas.setFillColor(COLORS['dot_inactive'])
             canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-            canvas.drawString(MARGIN + 260, current_y - strip_height + strip_height/2, "—")
+            canvas.drawString(MARGIN + 260, main_y, "—")
 
-        # Duration
+        # Duration (skip for cross-training)
         duration = running.get('estimatedDuration', 0)
-        if duration:
+        if duration and not cross_training.get('activity'):
             canvas.setFillColor(COLORS['soft_white'])
             canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-            canvas.drawString(MARGIN + 320, current_y - strip_height + strip_height/2, f"~{duration}min")
+            canvas.drawString(MARGIN + 320, main_y, f"~{duration}min")
         else:
             canvas.setFillColor(COLORS['dot_inactive'])
             canvas.setFont("Helvetica", FONT_SIZES['body_small'])
-            canvas.drawString(MARGIN + 320, current_y - strip_height + strip_height/2, "—")
+            canvas.drawString(MARGIN + 320, main_y, "—")
 
         # HR Zone - with dynamic truncation based on available space
         hr_zone = running.get('hrZone', '')
-        if hr_zone:
+        if hr_zone and not cross_training.get('activity'):
             canvas.setFillColor(COLORS['cyan_glow'])
             canvas.setFont("Helvetica", FONT_SIZES['caption'])
             zone_x = MARGIN + 385
-            max_zone_width = strip_width - 400  # Available space to right edge
+            max_zone_width = strip_width - 400
 
-            # Only truncate if text is too wide
             display_zone = hr_zone
             if canvas.stringWidth(hr_zone, "Helvetica", FONT_SIZES['caption']) > max_zone_width:
                 while canvas.stringWidth(display_zone + "…", "Helvetica", FONT_SIZES['caption']) > max_zone_width and len(display_zone) > 0:
                     display_zone = display_zone[:-1]
                 display_zone += "…"
 
-            canvas.drawString(zone_x, current_y - strip_height + strip_height/2, display_zone)
+            canvas.drawString(zone_x, main_y, display_zone)
 
-        current_y -= strip_height + 4
+        # Adjustment note (if workout was moved)
+        if has_adjustment_note:
+            original_day = adjustment.get('originalDay', '')
+            reason = adjustment.get('reason', '')
+            note_text = f"↳ Moved from {original_day.capitalize()}"
+            if reason:
+                note_text = f"↳ {reason}"
+
+            canvas.setFillColor(COLORS['adjustment_note'])
+            canvas.setFont("Helvetica-Oblique", FONT_SIZES['caption'])
+            canvas.drawString(title_x, main_y - 14, note_text)
+
+        current_y -= actual_strip_height + 4
 
     current_y -= 0.15 * inch
 
