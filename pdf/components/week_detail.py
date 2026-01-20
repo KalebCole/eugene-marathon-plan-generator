@@ -285,15 +285,22 @@ def draw_week_detail_page(canvas, week_data, week_number):
             canvas.setFont("Helvetica", FONT_SIZES['body_small'])
             canvas.drawString(MARGIN + 320, current_y - strip_height + strip_height/2, "—")
 
-        # HR Zone
+        # HR Zone - with dynamic truncation based on available space
         hr_zone = running.get('hrZone', '')
         if hr_zone:
             canvas.setFillColor(COLORS['cyan_glow'])
             canvas.setFont("Helvetica", FONT_SIZES['caption'])
-            # Truncate long HR zone text
-            if len(hr_zone) > 15:
-                hr_zone = hr_zone[:15] + "..."
-            canvas.drawString(MARGIN + 400, current_y - strip_height + strip_height/2, hr_zone)
+            zone_x = MARGIN + 385
+            max_zone_width = strip_width - 400  # Available space to right edge
+
+            # Only truncate if text is too wide
+            display_zone = hr_zone
+            if canvas.stringWidth(hr_zone, "Helvetica", FONT_SIZES['caption']) > max_zone_width:
+                while canvas.stringWidth(display_zone + "…", "Helvetica", FONT_SIZES['caption']) > max_zone_width and len(display_zone) > 0:
+                    display_zone = display_zone[:-1]
+                display_zone += "…"
+
+            canvas.drawString(zone_x, current_y - strip_height + strip_height/2, display_zone)
 
         current_y -= strip_height + 4
 

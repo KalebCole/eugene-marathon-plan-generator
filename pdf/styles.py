@@ -152,7 +152,7 @@ def draw_twilight_gradient(canvas, width, height):
         canvas.rect(0, y, width, h, fill=1, stroke=0)
 
 def draw_stars(canvas, width, height, count=100):
-    """Draw scattered stars on background"""
+    """Draw scattered stars on background - subtle so they don't interfere with text"""
     import random
     random.seed(42)  # Consistent star pattern
 
@@ -160,8 +160,8 @@ def draw_stars(canvas, width, height, count=100):
     for _ in range(count):
         x = random.uniform(0, width)
         y = random.uniform(0, height)
-        size = random.uniform(1, 3)
-        alpha = random.uniform(0.3, 1.0)
+        size = random.uniform(0.5, 2)  # Smaller stars (was 1-3)
+        alpha = random.uniform(0.15, 0.4)  # More subtle (was 0.3-1.0)
         canvas.saveState()
         canvas.setFillAlpha(alpha)
         canvas.circle(x, y, size, fill=1, stroke=0)
