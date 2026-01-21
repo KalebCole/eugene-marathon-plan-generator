@@ -33,39 +33,37 @@ def load_intake(intake_path: str) -> dict:
         return json.load(f)
 
 
-def find_generated_plan(intake: dict) -> str | None:
-    """Find the most recently generated plan for this athlete."""
+def find_generated_plans(intake: dict) -> list[str]:
+    """Find the generated plan files (conservative, moderate, ambitious)."""
     plans_dir = Path(__file__).parent.parent / 'plans'
 
-    email = intake.get('email', '')
-    email_prefix = email.split('@')[0].replace('.', '-').replace('_', '-') if '@' in email else None
+    # TypeScript generator outputs these fixed filenames
+    plan_files = ['conservative.json', 'moderate.json', 'ambitious.json']
 
-    if not email_prefix:
-        return None
+    found_plans = []
+    for plan_file in plan_files:
+        plan_path = plans_dir / plan_file
+        if plan_path.exists():
+            found_plans.append(str(plan_path))
 
-    # Find matching plan files
-    matching_plans = list(plans_dir.glob(f"{email_prefix}*-generated-*.json"))
-
-    if not matching_plans:
-        return None
-
-    # Return most recent
-    return str(max(matching_plans, key=lambda p: p.stat().st_mtime))
+    return found_plans
 
 
-def find_generated_pdf(plan_path: str) -> str | None:
-    """Find the PDF generated from this plan."""
-    if not plan_path:
-        return None
-
+def find_generated_pdfs() -> list[str]:
+    """Find the generated PDF files."""
     output_dir = Path(__file__).parent.parent / 'output'
-    plan_name = Path(plan_path).stem
 
-    pdf_path = output_dir / f"{plan_name}.pdf"
-    if pdf_path.exists():
-        return str(pdf_path)
+    # PDF naming convention: eugene-full-marathon---{level}-plan-{date}.pdf
+    # Find the most recent PDFs for each level
+    found_pdfs = []
+    for level in ['conservative', 'moderate', 'ambitious']:
+        matching = list(output_dir.glob(f"*{level}*.pdf"))
+        if matching:
+            # Get most recent
+            most_recent = max(matching, key=lambda p: p.stat().st_mtime)
+            found_pdfs.append(str(most_recent))
 
-    return None
+    return found_pdfs
 
 
 def get_github_url(file_path: str) -> str:
@@ -84,39 +82,58 @@ def get_github_url(file_path: str) -> str:
     return f"{server}/{repo}/blob/{branch}/{relative_path}"
 
 
-def build_email_content(intake: dict, plan_path: str, pdf_path: str) -> tuple[str, str]:
+def build_email_content(intake: dict, plan_paths: list[str], pdf_paths: list[str]) -> tuple[str, str]:
     """Build email subject and body."""
     goal = intake.get('goal', 'your marathon')
     target_time = intake.get('targetTime', '')
 
-    subject = "Your Eugene Marathon Training Plan is Ready!"
+    subject = "Your Eugene Marathon Training Plans are Ready!"
 
     # Build HTML body
     body_parts = [
-        "<h1>Your Training Plan is Ready!</h1>",
-        "<p>Great news! Your personalized training plan for the Eugene Marathon has been generated.</p>",
+        "<h1>Your Training Plans are Ready!</h1>",
+        "<p>Great news! Your personalized training plans for the Eugene Marathon have been generated.</p>",
+        "<p>We've created <strong>3 plan options</strong> for you: Conservative, Moderate, and Ambitious.</p>",
     ]
 
     if target_time:
         body_parts.append(f"<p><strong>Target Time:</strong> {target_time}</p>")
 
-    body_parts.append("<h2>Your Files</h2>")
+    body_parts.append("<h2>Your PDF Plans</h2>")
     body_parts.append("<ul>")
 
-    if pdf_path:
+    for pdf_path in pdf_paths:
         pdf_url = get_github_url(pdf_path)
-        body_parts.append(f'<li><a href="{pdf_url}">Download your PDF Training Plan</a></li>')
-
-    if plan_path:
-        plan_url = get_github_url(plan_path)
-        body_parts.append(f'<li><a href="{plan_url}">View detailed plan data (JSON)</a></li>')
+        pdf_name = Path(pdf_path).stem
+        # Extract level from filename
+        level = 'Plan'
+        for l in ['conservative', 'moderate', 'ambitious']:
+            if l in pdf_name.lower():
+                level = l.capitalize()
+                break
+        body_parts.append(f'<li><a href="{pdf_url}">{level} Plan (PDF)</a></li>')
 
     body_parts.append("</ul>")
 
+    if plan_paths:
+        body_parts.append("<h2>Plan Data (JSON)</h2>")
+        body_parts.append("<ul>")
+        for plan_path in plan_paths:
+            plan_url = get_github_url(plan_path)
+            plan_name = Path(plan_path).stem.capitalize()
+            body_parts.append(f'<li><a href="{plan_url}">{plan_name} (JSON data)</a></li>')
+        body_parts.append("</ul>")
+
     body_parts.extend([
+        "<h2>Which Plan Should I Choose?</h2>",
+        "<ul>",
+        "<li><strong>Conservative:</strong> Lower risk, more recovery - great if injury-prone or new to marathons</li>",
+        "<li><strong>Moderate:</strong> Balanced approach - recommended for most runners</li>",
+        "<li><strong>Ambitious:</strong> Higher volume/intensity - for experienced runners ready to push</li>",
+        "</ul>",
         "<h2>What's Next?</h2>",
         "<ol>",
-        "<li>Review your training plan and pace zones</li>",
+        "<li>Review all three plans and pick the one that fits your schedule</li>",
         "<li>Mark your calendar with key workouts</li>",
         "<li>Set up your Garmin/watch with your HR zones</li>",
         "<li>Start Week 1 on Monday!</li>",
@@ -189,18 +206,18 @@ def main():
     print(f"Athlete email: {email}")
 
     # Find generated files
-    plan_path = find_generated_plan(intake)
-    print(f"Found plan: {plan_path}")
+    plan_paths = find_generated_plans(intake)
+    print(f"Found plans: {plan_paths}")
 
-    pdf_path = find_generated_pdf(plan_path)
-    print(f"Found PDF: {pdf_path}")
+    pdf_paths = find_generated_pdfs()
+    print(f"Found PDFs: {pdf_paths}")
 
-    if not plan_path and not pdf_path:
+    if not plan_paths and not pdf_paths:
         print("Warning: No generated files found, skipping notification")
         sys.exit(0)
 
     # Build and send email
-    subject, html_content = build_email_content(intake, plan_path, pdf_path)
+    subject, html_content = build_email_content(intake, plan_paths, pdf_paths)
 
     print(f"Sending notification to: {email}")
     success = send_email(email, subject, html_content)
