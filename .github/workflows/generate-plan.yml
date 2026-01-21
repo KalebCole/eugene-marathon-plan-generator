@@ -32,31 +32,45 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         if: steps.new-files.outputs.files != ''
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Set up Node.js
+        if: steps.new-files.outputs.files != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install generator dependencies
+        if: steps.new-files.outputs.files != ''
+        run: |
+          cd generator
+          npm ci
+
       - name: Generate training plans
         if: steps.new-files.outputs.files != ''
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           for intake_file in ${{ steps.new-files.outputs.files }}; do
             echo "Processing: $intake_file"
-            python scripts/generate_plan.py "$intake_file"
+            cd generator
+            npx ts-node index.ts --input "../$intake_file" --output ../plans/ --validate
+            cd ..
           done
 
       - name: Generate PDFs
         if: steps.new-files.outputs.files != ''
         run: |
-          # Find newly created plan files and generate PDFs
-          for plan_file in plans/*-generated-*.json; do
+          # Generate PDFs for each plan level
+          for plan_file in plans/conservative.json plans/moderate.json plans/ambitious.json; do
             if [ -f "$plan_file" ]; then
               echo "Generating PDF for: $plan_file"
               output_name=$(basename "$plan_file" .json)
-              python pdf/generate_pdf.py "$plan_file" "output/${output_name}.pdf"
+              # Include date in filename for uniqueness
+              date_suffix=$(date +%Y%m%d)
+              python pdf/generate_pdf.py "$plan_file" "output/eugene-full-marathon---${output_name}-plan-${date_suffix}.pdf"
             fi
           done
 
